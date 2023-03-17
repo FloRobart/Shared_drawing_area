@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "donnees/jar_libraries/jdom-2.0.6.jar"
+    ]
+}
