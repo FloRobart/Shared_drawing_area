@@ -47,10 +47,22 @@ public class ServerToClientSocket extends Thread
                 if (command.equals("disconnect"))
                 {
                     this.Disconnect();
+                    break;
                 }
-                else
+
+                if (command.equals("name"))
                 {
-                    System.out.println("Commande inconnue");
+                    String name = (String)ois.readObject();
+                    System.out.println("Client name: " + name);
+                }
+
+                if (command.equals("requestDrawing"))
+                {
+                    System.out.println("Client requested drawing");
+
+                    // Send the drawing to the client
+                    
+
                 }
 
             }
