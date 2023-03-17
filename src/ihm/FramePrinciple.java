@@ -33,7 +33,9 @@ public class FramePrinciple extends JFrame
         this.setJMenuBar(this.menuBarre);
         this.add(this.panelPrincipale);
 
+
         /* Activation des composants */
+        
 
 
         /* Affichage de la fenêtre */

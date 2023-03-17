@@ -19,18 +19,6 @@ public interface Path
     public static final String PATH_THEME_X      = Path.initPaths("pathThemeX"     );
     public static final String PATH_THEME_SAVE   = Path.initPaths("pathThemeSave"  );
 
-	/* Langages */
-	public static final String PATH_LANGAGES     = Path.initPaths("pathLangages"   );
-	public static final String PATH_LANGAGE_X    = Path.initPaths("pathLangageX"   );
-	public static final String PATH_LANGAGE_SAVE = Path.initPaths("pathLangageSave");
-
-    /* Icon de l'explorateur */
-    public static final String PATH_FOLDER_ICON = Path.initPaths("pathFolderIcon");
-    public static final String PATH_EMPTY_FOLDER_ICON = Path.initPaths("pathEmptyFolderIcon");
-    public static final String PATH_FILE_ICON   = Path.initPaths("pathFileIcon"  );
-    public static final String PATH_ZIP_FILE    = Path.initPaths("pathZipFile" );
-    public static final String PATH_EMPTY_ZIP_FILE = Path.initPaths("pathEmptyZipFile" );
-
 
 
     /**

@@ -13,3 +13,8 @@
  
 .\src\path\Path.java  
  
+.\src\reseau\Client.java  
+.\src\reseau\ClientToServerSocket.java  
+.\src\reseau\ServerThread.java  
+.\src\reseau\ServerToClientSocket.java  
+ 
