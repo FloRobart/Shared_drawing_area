@@ -72,19 +72,19 @@ public class PanelSuppTheme extends JPanel implements ActionListener
         }
 
         /* Entête de colonne */
-        this.lstLabel.add(this.lstLabel.size(), new JLabel());
+        this.lstLabel.add(this.lstLabel.size(), new JLabel("Supprimer"));
         this.lstLabel.get(this.lstLabel.size()-1).setHorizontalAlignment(SwingConstants.RIGHT);
 
-        this.lstLabel.add(this.lstLabel.size(), new JLabel());
+        this.lstLabel.add(this.lstLabel.size(), new JLabel("Nom du thème"));
         this.lstLabel.get(this.lstLabel.size()-1).setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.lstLabel.add(this.lstLabel.size(), new JLabel());
+        this.lstLabel.add(this.lstLabel.size(), new JLabel("Appliquer thème"));
         this.lstLabel.get(this.lstLabel.size()-1).setHorizontalAlignment(SwingConstants.CENTER);
 
         /* Boutons appliquer thème */
         this.lstButton = new ArrayList<JButton>();
         for (int i = 0; i < nbThemePerso; i++)
-            this.lstButton.add(new JButton());
+            this.lstButton.add(new JButton("Appliquer"));
 
         /* Boutons supprimer et annuler */
         this.btnSupprimer = new JButton("Supprimer");
