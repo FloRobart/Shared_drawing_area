@@ -1,38 +1,69 @@
 package reseau;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ServerToClientSocket extends Thread
+public class ClientToServerSocket extends Thread
 {
-    private ServerThread serverThread;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private Socket socket;
     private Boolean running;
     
-    public ServerToClientSocket(ServerThread serverThread, Socket socket)
+    public ClientToServerSocket()
     {
-        this.serverThread = serverThread;
+
+    }
+
+    public Boolean Connect(String ip, int port)
+    {
         try
         {
-            this.ois = new ObjectInputStream(socket.getInputStream());
+            
+            this.socket = new Socket(ip, port);
+
             this.oos = new ObjectOutputStream(socket.getOutputStream());
+            this.ois = new ObjectInputStream(socket.getInputStream());
             this.running = true;
         }
         catch (Exception e)
         {
             System.err.println("Impossible de créer les flux d'entrée/sortie");
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
+
 
     public void Disconnect()
     {
         this.running = false;
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+        }
+
     }
 
+    public void sendName(String name)
+    {
+        if (!this.running)
+        {
+            return;
+        }
 
+        try {
+            this.oos.writeObject("name");
+            this.oos.writeObject(name);
+        } catch (IOException e) {
+            System.err.println("Impossible d'envoyer le nom");
+            e.printStackTrace();
+        }
+    }
+    
 
     @Override
     public void run()
@@ -40,7 +71,7 @@ public class ServerToClientSocket extends Thread
         while (this.running)
         {
 
-            // Read the object sent by the client
+            // Read the object sent by the server
             try
             {
                 String command = (String)ois.readObject();
