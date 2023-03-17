@@ -21,6 +21,7 @@ public class Client
         Boolean success = this.clientToServerSocket.Connect(ip, port);
 
         this.clientToServerSocket.sendName(name);
+        this.clientToServerSocket.requestDrawing();
 
         if (success)
         {

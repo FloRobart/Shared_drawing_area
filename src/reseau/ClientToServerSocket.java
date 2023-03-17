@@ -64,6 +64,21 @@ public class ClientToServerSocket extends Thread
         }
     }
     
+    public void requestDrawing()
+    {
+        if (!this.running)
+        {
+            return;
+        }
+
+        try {
+            this.oos.writeObject("requestDrawing");
+        } catch (IOException e) {
+            System.err.println("Impossible d'envoyer la demande de dessin");
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public void run()
