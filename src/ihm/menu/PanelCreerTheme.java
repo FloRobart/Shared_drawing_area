@@ -34,6 +34,7 @@ import path.Path;
 public class PanelCreerTheme extends JPanel implements ActionListener
 {
     private final String[] TAB_CLES;
+    private final static String[] TAB_NOMS = new String[] {"Couleur générale du fond", "Couleur générale du texte", "Couleur de mauvaise action", "Couleur de bonne action", "Couleur de fond des titres", "Couleur de fond des zones de saisies", "Couleur du texte par défaut des zones de saisie", "Couleur de fond des boutons"};
 
     private Controleur ctrl;
 
@@ -115,8 +116,8 @@ public class PanelCreerTheme extends JPanel implements ActionListener
         this.lstBtn = new ArrayList<JButton>();
         for (int i = 0; i < this.TAB_CLES.length; i++)
         {
-            this.lstLbl.add(new JLabel ());
-            this.lstBtn.add(new JButton());
+            this.lstLbl.add(new JLabel (PanelCreerTheme.TAB_NOMS[i]));
+            this.lstBtn.add(new JButton("Changer de couleur"));
         }
 
 
@@ -124,11 +125,11 @@ public class PanelCreerTheme extends JPanel implements ActionListener
         this.panelSud = new JPanel();
 
         /* Bouton valider */
-        this.btnValider = new JButton();
+        this.btnValider = new JButton("Valider");
         this.btnValider.setPreferredSize(new Dimension(100, 30));
 
         /* Bouton annuler */
-        this.btnAnnuler = new JButton();
+        this.btnAnnuler = new JButton("Annuler");
         this.btnAnnuler.setPreferredSize(new Dimension(100, 30));
 
 

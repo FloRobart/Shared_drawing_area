@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -88,8 +87,8 @@ public class PanelSuppTheme extends JPanel implements ActionListener
             this.lstButton.add(new JButton());
 
         /* Boutons supprimer et annuler */
-        this.btnSupprimer = new JButton();
-        this.btnAnnuler   = new JButton();
+        this.btnSupprimer = new JButton("Supprimer");
+        this.btnAnnuler   = new JButton("Annuler");
 
 
         /*----------------------*/

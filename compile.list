@@ -2,6 +2,8 @@
  
 .\src\ihm\FramePrinciple.java  
 .\src\ihm\PanelPrincipale.java  
+.\src\ihm\PanelHaut.java  
+.\src\ihm\PanelPaint.java  
  
 .\src\ihm\menu\MenuBarre.java  
 .\src\ihm\menu\FrameCreerTheme.java  
