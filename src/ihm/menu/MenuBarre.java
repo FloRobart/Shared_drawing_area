@@ -60,6 +60,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/* Fichiers */
 		/*----------*/
 		// TODO : Ajouter les composants pour les fichiers (potentiellemnt les mêmes qui pour le clique droit pour faire fonctionner les raccourcis clavier)
+		this.menuFichiers = new JMenu("Fichiers");
+		this.menuFichiers.setMnemonic('F');
 
 
 
@@ -97,6 +99,12 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*=======================*/
 		/* Ajouts des composants */
 		/*=======================*/
+		/*----------*/
+		/* Fichiers */
+		/*----------*/
+		this.add(menuFichiers);
+
+
 		/*------------*/
 		/* Préférence */
 		/*------------*/
@@ -129,6 +137,12 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*============================*/
 		/* Activations des composants */
 		/*============================*/
+		/*----------*/
+		/* Fichiers */
+		/*----------*/
+
+
+
 		/*-------------*/
 		/* Préférences */
 		/*-------------*/
@@ -149,13 +163,13 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/* Préférences */
 			if (e.getSource() == this.menuiPreferencesThemesClair)
 				this.ctrl.changerTheme("clair");
-			
+
 			if (e.getSource() == this.menuiPreferencesThemesSombre)
 				this.ctrl.changerTheme("sombre");
 
 			if (e.getSource() == this.menuiPreferencesThemesDark)
 				this.ctrl.changerTheme("dark");
-			
+
 			/* Nouveau */
 			if (e.getSource() == this.lstMenuiPreferencesThemesPerso.get(0))
 			{
@@ -257,7 +271,16 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*-------*/
 		if (this.frameCreerTheme != null) { this.frameCreerTheme.appliquerTheme(); }
 		if (this.frameSuppTheme != null) { this.frameSuppTheme.appliquerTheme(); }
+
+
+
+		/*---------*/
+		/* Fichier */
+		/*---------*/
+		this.menuFichiers.setBackground(backGeneralColor);
+		this.menuFichiers.setForeground(foreGeneralColor);
 		
+
 
 		/*------------*/
 		/* Préférence */

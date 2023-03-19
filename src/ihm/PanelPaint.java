@@ -12,5 +12,6 @@ public class PanelPaint extends JPanel
     public PanelPaint(Controleur ctrl)
     {
         this.ctrl = ctrl;
+        this.setBackground(Color.RED);
     }
 }
