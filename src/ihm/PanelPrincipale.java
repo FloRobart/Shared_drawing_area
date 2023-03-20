@@ -2,17 +2,20 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controleur.Controleur;
+import metier.Metier;
 
 
 public class PanelPrincipale extends JPanel
 {
     private Controleur ctrl;
     private PanelHaut panelHaut;
+    private JPanel panelConteneur;
     private PanelPaint panelPaint;
     private JScrollPane scrollPane;
 
@@ -22,9 +25,11 @@ public class PanelPrincipale extends JPanel
         this.setLayout(new BorderLayout());
 
         /* Création des composants */
-        this.panelHaut = new PanelHaut(ctrl);
-        this.panelPaint = new PanelPaint(ctrl);
-        this.scrollPane = new JScrollPane(this.panelPaint);
+        this.panelHaut      = new PanelHaut(ctrl);
+        this.panelConteneur = new JPanel();
+        this.panelPaint     = new PanelPaint(ctrl, Metier.TAILLE_PLATEAU);
+        this.panelConteneur.add(this.panelPaint);
+        this.scrollPane     = new JScrollPane(this.panelConteneur);
 
 
         /* Ajout des composants */
@@ -45,6 +50,7 @@ public class PanelPrincipale extends JPanel
         this.setForeground(foreGeneralColor);
 
         this.panelHaut.appliquerTheme();
+        this.panelConteneur.setBackground(backGeneralColor);
         this.scrollPane.getHorizontalScrollBar().setBackground(backGeneralColor);
         this.scrollPane.getVerticalScrollBar  ().setBackground(backGeneralColor);
     }

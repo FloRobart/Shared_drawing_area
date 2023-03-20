@@ -1,6 +1,7 @@
 package controleur;
 
 import ihm.FramePrinciple;
+import metier.Forme;
 import metier.Metier;
 
 import java.util.HashMap;
@@ -29,6 +30,19 @@ public class Controleur
 
 
 
+
+    /*====================*/
+	/* Gestion des formes */
+	/*====================*/
+	public List<Forme> getLstFormes() { return this.metier.getLstFormes(); }
+	public List<Forme> getLstFormesSupprimer() { return this.metier.getLstFormes(); }
+
+	public Forme getFormeAt(int index) { return this.metier.getFormeAt(index); }
+	public Forme getFormeSupprimerAt(int index) { return this.metier.getFormeSupprimerAt(index); }
+
+	public void addForme(Forme forme) { this.metier.addForme(forme); }
+	public void removeForme(Forme forme) { this.metier.removeForme(forme); }
+	public void unRemoveForme(Forme forme) { this.metier.unRemoveForme(forme); }
 
 
 

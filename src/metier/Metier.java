@@ -38,24 +38,59 @@ import java.nio.file.StandardCopyOption;
 
 public class Metier
 {
+	public static final int[] TAILLE_PLATEAU = new int[]{Toolkit.getDefaultToolkit().getScreenSize().width - 100, Toolkit.getDefaultToolkit().getScreenSize().height - 200};
+
+	/* Controleur */
     private Controleur ctrl;
+
+
+	/* Gestion des formes */
+	private List<Forme> lstFormes;
+	private List<Forme> lstFormesSupprimer;
+
 
     /* Thèmes */
 	private int                     nbThemePerso;
 	private List<String>            lstNomThemesPerso;
     private HashMap<String, Color>  hmColorTheme;
+	
 
 
     public Metier(Controleur ctrl)
     {
+		/* Controleur */
         this.ctrl = ctrl;
+
+		/* Gestion des formes */
+		this.lstFormes = new ArrayList<>();
+		this.lstFormesSupprimer = new ArrayList<>();
+
+
 
         /* Thèmes */
 		this.nbThemePerso      = this.initNbThemePerso();
 		this.lstNomThemesPerso = this.initLstNameThemesPerso();
-        this.hmColorTheme     = new HashMap<String, Color>();
+        this.hmColorTheme      = new HashMap<>();
         this.chargerThemes(this.getThemeUsed());
     }
+
+	/*====================*/
+	/* Gestion des formes */
+	/*====================*/
+	public List<Forme> getLstFormes() { return this.lstFormes; }
+	public List<Forme> getLstFormesSupprimer() { return this.lstFormesSupprimer; }
+
+	public Forme getFormeAt(int index) { return this.lstFormes.get(index); }
+	public Forme getFormeSupprimerAt(int index) { return this.lstFormesSupprimer.get(index); }
+
+	public void addForme(Forme forme) { this.lstFormes.add(forme); }
+	public void removeForme(Forme forme) { this.lstFormesSupprimer.add(this.lstFormes.remove(this.lstFormes.indexOf(forme))); }
+	public void unRemoveForme(Forme forme) { this.lstFormes.add(this.lstFormesSupprimer.remove(this.lstFormesSupprimer.indexOf(forme))); }
+
+
+
+
+
 
     /*========*/
 	/* Thèmes */
