@@ -19,8 +19,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
 {
     private Controleur ctrl;
 
-    private List<Forme> lstFormes;
-
 
     public PanelPaint(Controleur ctrl, int[] taillePlateau)
     {

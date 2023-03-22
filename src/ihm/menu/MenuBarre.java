@@ -33,6 +33,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenu menuAide;
 
 	/* Fichier */
+	private JMenuItem menuiFichiersAnnuler;
+	private JMenuItem menuiFichiersRestorer;
 
 	/* Préférences */
 	private JMenu     menuiPreferencesThemes;
@@ -62,6 +64,14 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		// TODO : Ajouter les composants pour les fichiers (potentiellemnt les mêmes qui pour le clique droit pour faire fonctionner les raccourcis clavier)
 		this.menuFichiers = new JMenu("Fichiers");
 		this.menuFichiers.setMnemonic('F');
+
+		/* Annuler */
+		this.menuiFichiersAnnuler = new JMenuItem("Annuler");
+		this.menuiFichiersAnnuler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+
+		/* Restorer */
+		this.menuiFichiersRestorer = new JMenuItem("Restorer");
+		this.menuiFichiersRestorer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
 
 
 
@@ -102,6 +112,13 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*----------*/
 		/* Fichiers */
 		/*----------*/
+		/* Annuler */
+		this.menuFichiers.add(this.menuiFichiersAnnuler);
+
+		/* Restorer */
+		this.menuFichiers.add(this.menuiFichiersRestorer);
+
+		/* Ajout de tout à la JMenuBar */
 		this.add(menuFichiers);
 
 
@@ -140,6 +157,11 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*----------*/
 		/* Fichiers */
 		/*----------*/
+		/* Annuler */
+		this.menuiFichiersAnnuler.addActionListener(this);
+
+		/* Restorer */
+		this.menuiFichiersRestorer.addActionListener(this);
 
 
 
@@ -160,7 +182,20 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	{
 		if (e.getSource() instanceof JMenuItem)
 		{
+			/*----------*/
+			/* Fichiers */
+			/*----------*/
+			/* Annuler */
+			if (e.getSource() == this.menuiFichiersAnnuler)
+				this.ctrl.removeForme(this.ctrl.getFormeAt(this.ctrl.getLstFormes().size() - 1));
+
+			/* Restorer */
+			if (e.getSource() == this.menuiFichiersRestorer)
+				this.ctrl.addForme(this.ctrl.getFormeSupprimerAt(UNDEFINED_CONDITION));
+
+			/*-------------*/
 			/* Préférences */
+			/*-------------*/
 			if (e.getSource() == this.menuiPreferencesThemesClair)
 				this.ctrl.changerTheme("clair");
 
