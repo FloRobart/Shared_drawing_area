@@ -133,7 +133,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             if (this.formeSelectionned != null)
             {
-                System.out.println("xDeb - xFin : " + (this.formeSelectionned.getXFin() - this.formeSelectionned.getXDeb()) + " yDeb - yFin : " + (this.formeSelectionned.getYFin() - this.formeSelectionned.getYDeb()));
                 if (this.formeSelectionned.getXFin() - this.formeSelectionned.getXDeb() < 0 || this.formeSelectionned.getYFin() - this.formeSelectionned.getYDeb() < 0)
                 {
                     this.ctrl.getLstFormes().remove(this.formeSelectionned);

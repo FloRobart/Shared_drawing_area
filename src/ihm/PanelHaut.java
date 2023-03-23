@@ -77,26 +77,27 @@ public class PanelHaut extends JPanel
     {
         Color backGeneralColor = this.ctrl.getTheme().get("background");
         Color foreGeneralColor = this.ctrl.getTheme().get("foreground");
+        Color btnBackColor     = this.ctrl.getTheme().get("btnBackground");
 
         this.setBackground(backGeneralColor);
         this.setForeground(foreGeneralColor);
 
-        btnLigne.setBackground(backGeneralColor);
+        btnLigne.setBackground(btnBackColor);
         btnLigne.setForeground(foreGeneralColor);
 
-        btnCercle.setBackground(backGeneralColor);
+        btnCercle.setBackground(btnBackColor);
         btnCercle.setForeground(foreGeneralColor);
 
-        btnCarre.setBackground(backGeneralColor);
+        btnCarre.setBackground(btnBackColor);
         btnCarre.setForeground(foreGeneralColor);
 
-        btnTexte.setBackground(backGeneralColor);
+        btnTexte.setBackground(btnBackColor);
         btnTexte.setForeground(foreGeneralColor);
 
-        btnRemplir.setBackground(backGeneralColor);
+        btnRemplir.setBackground(btnBackColor);
         btnRemplir.setForeground(foreGeneralColor);
 
-        btnCouleur.setBackground(backGeneralColor);
+        btnCouleur.setBackground(btnBackColor);
         btnCouleur.setForeground(foreGeneralColor);
     }
 }

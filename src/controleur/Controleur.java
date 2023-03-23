@@ -72,7 +72,7 @@ public class Controleur
 	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes et la supprime de la liste des formes supprimé.
 	 * @param forme : forme à rétablir.
 	 */
-	public void unRemoveForme(Forme forme) { this.metier.unRemoveForme(forme); }
+	public void unRemoveForme() { this.metier.unRemoveForme(); }
 
     /**
      * Permet de mettre à jour l'IHM

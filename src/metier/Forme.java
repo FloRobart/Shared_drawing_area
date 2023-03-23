@@ -11,6 +11,7 @@ public class Forme
     public static final int TYPE_CERCLE = 0;
     public static final int TYPE_LIGNE  = 1;
     public static final int TYPE_RECT   = 2;
+    public static final int TYPE_TEXT   = 3;
 
     private int xDeb;
     private int yDeb;

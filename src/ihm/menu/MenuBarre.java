@@ -33,6 +33,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenu menuAide;
 
 	/* Fichier */
+	private JMenuItem menuiFichiersNouveau;
+	private JMenuItem menuiFichiersOuvrir;
+	private JMenuItem menuiFichiersSauvegarder;
 	private JMenuItem menuiFichiersAnnuler;
 	private JMenuItem menuiFichiersRestorer;
 
@@ -44,8 +47,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenu     menuiPreferencesThemesPerso;
 
 	private List<JMenuItem> lstMenuiPreferencesThemesPerso;
-
-	/* Langages */
 
 
 	public MenuBarre(Controleur ctrl) 
@@ -64,6 +65,18 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		// TODO : Ajouter les composants pour les fichiers (potentiellemnt les mêmes qui pour le clique droit pour faire fonctionner les raccourcis clavier)
 		this.menuFichiers = new JMenu("Fichiers");
 		this.menuFichiers.setMnemonic('F');
+
+		/* Nouveau */
+		this.menuiFichiersNouveau = new JMenuItem("Nouveau");
+		this.menuiFichiersNouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+
+		/* Ouvrir */
+		this.menuiFichiersOuvrir = new JMenuItem("Ouvrir");
+		this.menuiFichiersOuvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
+
+		/* Sauvegarder */
+		this.menuiFichiersSauvegarder = new JMenuItem("Sauvegarder");
+		this.menuiFichiersSauvegarder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 
 		/* Annuler */
 		this.menuiFichiersAnnuler = new JMenuItem("Annuler");
@@ -112,6 +125,15 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*----------*/
 		/* Fichiers */
 		/*----------*/
+		/* Nouveau */
+		this.menuFichiers.add(this.menuiFichiersNouveau);
+
+		/* Ouvrir */
+		this.menuFichiers.add(this.menuiFichiersOuvrir);
+
+		/* Sauvegarder */
+		this.menuFichiers.add(this.menuiFichiersSauvegarder);
+
 		/* Annuler */
 		this.menuFichiers.add(this.menuiFichiersAnnuler);
 
@@ -157,6 +179,15 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*----------*/
 		/* Fichiers */
 		/*----------*/
+		/* Nouveau */
+		this.menuiFichiersNouveau.addActionListener(this);
+
+		/* Ouvrir */
+		this.menuiFichiersOuvrir.addActionListener(this);
+
+		/* Sauvegarder */
+		this.menuiFichiersSauvegarder.addActionListener(this);
+
 		/* Annuler */
 		this.menuiFichiersAnnuler.addActionListener(this);
 
@@ -185,20 +216,40 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/*----------*/
 			/* Fichiers */
 			/*----------*/
+			/* Nouveau */
+			if (e.getSource() == this.menuiFichiersNouveau)
+			{
+				//this.ctrl.new();
+				this.ctrl.majIhm();
+			}
+
+			/* Ouvrir */
+			if (e.getSource() == this.menuiFichiersOuvrir)
+			{
+				//this.ctrl.open();
+				this.ctrl.majIhm();
+			}
+
+			/* Sauvegarder */
+			if (e.getSource() == this.menuiFichiersSauvegarder)
+			{
+				//this.ctrl.save();
+			}
+
 			/* Annuler */
 			if (e.getSource() == this.menuiFichiersAnnuler)
 			{
-				if (this.ctrl.getLstFormes().size() <= 0) return;
-				this.ctrl.removeForme(this.ctrl.getFormeAt(this.ctrl.getLstFormes().size() - 1));
-				this.ctrl.majIhm();
+				if (this.ctrl.getLstFormes().size() > 0)
+				{
+					this.ctrl.removeForme(this.ctrl.getFormeAt(this.ctrl.getLstFormes().size() - 1));
+					this.ctrl.majIhm();
+				}
 			}
 
 			/* Restorer */
 			if (e.getSource() == this.menuiFichiersRestorer)
 			{
-				if (this.ctrl.getLstFormesSupprimer().size() <= 0) return;
-				// TODO : supprimer la fonction unRemoveForme pour utiliser la fonction addForme 
-				this.ctrl.unRemoveForme(this.ctrl.getFormeSupprimerAt(this.ctrl.getLstFormesSupprimer().size() - 1));
+				this.ctrl.unRemoveForme();
 				this.ctrl.majIhm();
 			}
 
