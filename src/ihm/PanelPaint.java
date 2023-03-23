@@ -83,7 +83,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         if (me.getButton() == MouseEvent.BUTTON1)
         {
             this.click = MouseEvent.BUTTON1;
-            Forme forme = new Forme(me.getX(), me.getY(), Forme.TYPE_LIGNE, false, Color.RED);
+            Forme forme = new Forme(me.getX(), me.getY(), Forme.TYPE_CERCLE, false, this.ctrl.getSelectedColor());
             this.ctrl.addForme(forme);
             this.formeSelectionned = forme;
         }

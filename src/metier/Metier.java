@@ -47,6 +47,7 @@ public class Metier
 	/* Gestion des formes */
 	private List<Forme> lstFormes;
 	private List<Forme> lstFormesSupprimer;
+	private Color 	    selectedColor;
 
 
     /* Thèmes */
@@ -66,12 +67,14 @@ public class Metier
 		this.lstFormesSupprimer = new ArrayList<>();
 
 
-
         /* Thèmes */
 		this.nbThemePerso      = this.initNbThemePerso();
 		this.lstNomThemesPerso = this.initLstNameThemesPerso();
         this.hmColorTheme      = new HashMap<>();
         this.chargerThemes(this.getThemeUsed());
+
+		/* Couleur sélectionné */
+		this.selectedColor = this.hmColorTheme.get("foreground");
     }
 
 	/*====================*/
@@ -140,6 +143,17 @@ public class Metier
 			this.lstFormes.add(this.lstFormesSupprimer.remove(this.lstFormesSupprimer.size()-1));
 	}
 
+	/**
+	 * Permet de modifier la couleur sélectionné.
+	 * @param color : nouvelle couleur sélectionné.
+	 */
+	public void setSelectedColor(Color color) { this.selectedColor = color; }
+
+	/**
+	 * Permet de récupérer la couleur sélectionné.
+	 * @return la couleur sélectionné.
+	 */
+	public Color getSelectedColor() { return this.selectedColor; }
 
 
 

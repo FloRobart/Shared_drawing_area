@@ -20,8 +20,6 @@ public class PanelOutils extends JPanel implements ActionListener
     private static final int TAILLE_BOUTONS = 50;
 
     private Controleur ctrl;
-
-    private Color couleurSelectionned;
  
     private JButton btnLigne;
     private JButton btnCercle;
@@ -35,8 +33,6 @@ public class PanelOutils extends JPanel implements ActionListener
     public PanelOutils(Controleur ctrl)
     {
         this.ctrl = ctrl;
-
-        this.couleurSelectionned = this.ctrl.getTheme().get("foreground");
 
         /*-------------------------*/
         /* Création des composants */
@@ -154,8 +150,11 @@ public class PanelOutils extends JPanel implements ActionListener
         }
         else if (ae.getSource() == btnCouleur)
         {
-            //this.ctrl.setMode("Couleur");
-            //Color colorRet = new Color(255, 255 - r, 255 - g, 255 - b);
+            Color couleur = JColorChooser.showDialog(this, "Choisissez une couleur", this.ctrl.getTheme().get("foreground"));
+            if (couleur != null)
+                this.ctrl.setSelectedColor(couleur);
+
+            this.majIhm();
         }
         else if (ae.getSource() == btnPeindre)
         {
@@ -186,7 +185,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 int yFin  = PanelOutils.TAILLE_BOUTONS - yDeb;
 
                 /* Dessins de la ligne */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
                 g2.drawLine(xDeb, yDeb, xFin, yFin);
             }
@@ -221,7 +220,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 int taille  = PanelOutils.TAILLE_BOUTONS - (posX + posY);
 
                 /* Dessins du cercle */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
                 g2.drawOval(posX, posY, taille, taille);
             }
@@ -256,7 +255,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 int taille  = PanelOutils.TAILLE_BOUTONS - (posX + posY);
 
                 /* Dessins du carré */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
                 g2.drawRect(posX, posY, taille, taille);
             }
@@ -286,7 +285,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 g2.fillRect(0, 0, PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS);
 
                 /* Dessins du texte */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setFont(new Font("Bell MT", Font.BOLD, 45));
                 g2.drawString("T", 8, 40);
             }
@@ -321,7 +320,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 int taille  = PanelOutils.TAILLE_BOUTONS - (posX+posY);
 
                 /* Dessins du carre */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
                 g2.drawRect(posX, posY, taille, taille);
 
@@ -363,7 +362,7 @@ public class PanelOutils extends JPanel implements ActionListener
                 int taille  = PanelOutils.TAILLE_BOUTONS - (posX+posY);
 
                 /* Dessins du Carre de couleur */
-                g.setColor(couleurSelectionned);
+                g.setColor(ctrl.getSelectedColor());
                 g.fillRect(posX, posY, taille, taille);
             }
 
@@ -391,7 +390,16 @@ public class PanelOutils extends JPanel implements ActionListener
                 g2.setColor(ctrl.getTheme().get("buttonsBackground"));
                 g2.fillRect(0, 0, PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS);
 
-                
+
+                /* Dessins de la peinture à l'intérieur du pot */
+                g2.setColor(ctrl.getSelectedColor());
+                g2.setStroke(new BasicStroke(3));
+                g2.drawLine(15, 23, 41, 23);
+                g2.drawLine(21, 26, 40, 26);
+                g2.drawLine(29, 29, 39, 29);
+                g2.drawLine(36, 31, 38, 31);
+
+
                 /* Dessin du pot de peinture */
                 g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
@@ -403,20 +411,14 @@ public class PanelOutils extends JPanel implements ActionListener
                 /* Dessin de la poigner du pot */
                 g2.setStroke(new BasicStroke((float)1.5));
                 g2.drawLine(30, 10, 19, 19);
-                //g2.drawArc(20, 10, 25, 25, 0, 180);
-
-
-                /* Dessins de la peinture à l'intérieur du pot */
-                g2.setColor(couleurSelectionned);
 
 
                 /* Dessins de la goutte de peinturee qui tombre du pot */
-                g2.setColor(couleurSelectionned);
+                g2.setColor(ctrl.getSelectedColor());
                 g2.setStroke(new BasicStroke(3));
                 g2.fillOval(14/2, 24+10, 10, 10);
                 g2.drawLine(14, 24, (14/2)+3, (24+10)+(10/2)); // coté gauche de la goutte
                 g2.drawLine(14, 24, (14/2)+8, (24+10)+(10/2)); // coté droit de la goutte
-
             }
 
             @Override
@@ -433,13 +435,8 @@ public class PanelOutils extends JPanel implements ActionListener
      */
     public void majIhm()
     {
-        btnLigne  .setIcon(this.iconLigne  ());
-        btnCercle .setIcon(this.iconCercle ());
-        btnCarre  .setIcon(this.iconCarre  ());
-        btnTexte  .setIcon(this.iconTexte  ());
-        btnRempli .setIcon(this.iconRempli ());
-        btnCouleur.setIcon(this.iconCouleur());
-        btnPeindre.setIcon(this.iconPeindre());
+        this.btnCouleur.setIcon(this.iconCouleur());
+        this.btnPeindre.setIcon(this.iconPeindre());
     }
 
 

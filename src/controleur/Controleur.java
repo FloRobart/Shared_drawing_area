@@ -75,6 +75,18 @@ public class Controleur
 	public void unRemoveForme() { this.metier.unRemoveForme(); }
 
     /**
+	 * Permet de modifier la couleur sélectionné.
+	 * @param color : nouvelle couleur sélectionné.
+	 */
+	public void setSelectedColor(Color color) { this.metier.setSelectedColor(color);; }
+
+	/**
+	 * Permet de récupérer la couleur sélectionné.
+	 * @return la couleur sélectionné.
+	 */
+	public Color getSelectedColor() { return this.metier.getSelectedColor(); }
+
+    /**
      * Permet de mettre à jour l'IHM
      */
     public void majIhm() { this.ihm.majIhm(); }

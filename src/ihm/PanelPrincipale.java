@@ -35,9 +35,6 @@ public class PanelPrincipale extends JPanel
         /* Ajout des composants */
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.scrollPane, BorderLayout.CENTER);
-
-
-        /* Activation des composants */
     }
 
     /**
