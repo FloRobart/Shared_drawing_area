@@ -37,13 +37,13 @@ public class Forme
         this(xDeb, yDeb, xDeb, yDeb, type, rempli, couleur);
     }
 
-    public int   getXDeb   () { return xDeb; }
-    public int   getYDeb   () { return yDeb; }
-    public int   getXFin   () { return xFin; }
-    public int   getYFin   () { return yFin; }
-    public int   getType   () { return type; }
-    public boolean isRempli() { return rempli; }
-    public Color getCouleur() { return couleur; }
+    public int     getXDeb   () { return xDeb; }
+    public int     getYDeb   () { return yDeb; }
+    public int     getXFin   () { return xFin; }
+    public int     getYFin   () { return yFin; }
+    public int     getType   () { return type; }
+    public boolean isRempli  () { return rempli; }
+    public Color   getCouleur() { return couleur; }
 
     public boolean isIn(int x, int y)
     {
@@ -69,13 +69,14 @@ public class Forme
         return false;
     }
 
-    public void setXDeb   (int   xDeb   ) { this.xDeb = xDeb; }
-    public void setYDeb   (int   yDeb   ) { this.yDeb = yDeb; }
-    public void setXFin   (int   xFin   ) { this.xFin = min(max(xFin, 0), TAILLE_PLATEAU[0]); }
-    public void setYFin   (int   yFin   ) { this.yFin = min(max(yFin, 0), TAILLE_PLATEAU[1]); }
-    public void setType   (int   type   ) { this.type = type; }
-    public void setRemplis(boolean rempli) { this.rempli = rempli; }
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    public void setXDeb   (int   xDeb    ) { this.xDeb = xDeb; }
+    public void setYDeb   (int   yDeb    ) { this.yDeb = yDeb; }
+    public void setXFin   (int   xFin    ) { this.xFin = min(max(xFin, 0), TAILLE_PLATEAU[0]); }
+    public void setYFin   (int   yFin    ) { this.yFin = min(max(yFin, 0), TAILLE_PLATEAU[1]); }
+    public void setType   (int   type    ) { this.type = type; }
+    public void setRempli (boolean rempli) { this.rempli = rempli; }
+    public void setCouleur(Color couleur ) { this.couleur = couleur; }
+
 
     public void serialisable()
     {

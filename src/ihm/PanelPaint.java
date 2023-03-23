@@ -68,9 +68,9 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             else if (forme.getType() == Forme.TYPE_CERCLE)
             {
                 if (forme.isRempli())
-                    g2.fillOval(forme.getXDeb(), forme.getYDeb(), forme.getXDeb() + (forme.getXFin() - forme.getXDeb()), forme.getXDeb() + (forme.getYFin() - forme.getXDeb()));
+                    g2.fillOval(forme.getXDeb(), forme.getYDeb(), Math.max(forme.getXDeb() - forme.getXFin(), forme.getXFin() - forme.getXDeb()), Math.max(forme.getYDeb() - forme.getYFin(), forme.getYFin() - forme.getYDeb()));
                 else
-                    g2.drawOval(forme.getXDeb(), forme.getYDeb(), forme.getXDeb() + (forme.getXFin() - forme.getXDeb()), forme.getXDeb() + (forme.getYFin() - forme.getXDeb()));
+                    g2.drawOval(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
             }
         }
     }
@@ -127,11 +127,19 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     }
 
     @Override
-    public void mouseClicked(MouseEvent me)
+    public void mouseReleased(MouseEvent me)
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-
+            if (this.formeSelectionned != null)
+            {
+                System.out.println("xDeb - xFin : " + (this.formeSelectionned.getXFin() - this.formeSelectionned.getXDeb()) + " yDeb - yFin : " + (this.formeSelectionned.getYFin() - this.formeSelectionned.getYDeb()));
+                if (this.formeSelectionned.getXFin() - this.formeSelectionned.getXDeb() < 0 || this.formeSelectionned.getYFin() - this.formeSelectionned.getYDeb() < 0)
+                {
+                    this.ctrl.getLstFormes().remove(this.formeSelectionned);
+                    this.formeSelectionned = null;
+                }
+            }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
@@ -152,5 +160,5 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseExited(MouseEvent me) {}
     @Override
-    public void mouseReleased(MouseEvent me) {}
+    public void mouseClicked(MouseEvent me) {}
 }
