@@ -72,6 +72,11 @@ public class FramePrinciple extends JFrame
     }
 
     /**
+     * Permet de mettre à jour l'IHM
+     */
+    public void majIhm() { this.panelPrincipale.majIhm(); }
+
+    /**
      * Permet d'appliquer le thème à l'ihm
      */
     public void appliquerTheme()

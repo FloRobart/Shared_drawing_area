@@ -40,7 +40,15 @@ public class PanelPrincipale extends JPanel
         /* Activation des composants */
     }
 
+    /**
+     * Permet de mettre à jour l'IHM
+     */
+    public void majIhm() { this.panelPaint.repaint(); }
 
+
+    /**
+     * Permet d'appliquer le thème
+     */
     public void appliquerTheme()
     {
         Color backGeneralColor = this.ctrl.getTheme().get("background");

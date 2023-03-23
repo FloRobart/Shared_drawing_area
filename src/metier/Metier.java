@@ -77,14 +77,51 @@ public class Metier
 	/*====================*/
 	/* Gestion des formes */
 	/*====================*/
+	/**
+	 * Peremt de récupérer la liste des formes.
+	 * @return la liste des formes.
+	 */
 	public List<Forme> getLstFormes() { return this.lstFormes; }
+
+	/**
+	 * Permet de récupérer la liste des formes supprimé.
+	 * @return la liste des formes supprimé.
+	 */
 	public List<Forme> getLstFormesSupprimer() { return this.lstFormesSupprimer; }
 
+	/**
+	 * Permet de récupérer une forme.
+	 * @param index : index de la forme à récupérer.
+	 * @return la forme qui se trouve à l'index passé en paramètre.
+	 */
 	public Forme getFormeAt(int index) { return this.lstFormes.get(index); }
-	public Forme getFormeSupprimerAt(int index) { return this.lstFormesSupprimer.get(index); }
 
+	/**
+	 * Permet de récupérer une forme supprimé.
+	 * @param index : index de la forme à récupérer.
+	 * @return la forme supprimé qui se trouve à l'index passé en paramètre.
+	 */
+	public Forme getFormeSupprimerAt(int index) { if (index < 0 || index >= this.lstFormesSupprimer.size()) throw new IllegalArgumentException("ERREUR dans la méthode 'getFormeSupprimerAt(int)', l'index est invalide."); return this.lstFormesSupprimer.get(index); }
+
+	/**
+	 * Permet d'ajouter une forme.
+	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes.
+	 * @param forme : forme à ajouter.
+	 */
 	public void addForme(Forme forme) { this.lstFormes.add(forme); }
+
+	/**
+	 * Permet de supprimer une forme.
+	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes supprimé et la supprime de la liste des formes.
+	 * @param forme : forme à supprimer.
+	 */
 	public void removeForme(Forme forme) { this.lstFormesSupprimer.add(this.lstFormes.remove(this.lstFormes.indexOf(forme))); }
+
+	/**
+	 * Permet de rétablir une forme supprimé.
+	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes et la supprime de la liste des formes supprimé.
+	 * @param forme : forme à rétablir.
+	 */
 	public void unRemoveForme(Forme forme) { this.lstFormes.add(this.lstFormesSupprimer.remove(this.lstFormesSupprimer.indexOf(forme))); }
 
 

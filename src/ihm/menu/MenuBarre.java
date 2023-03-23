@@ -187,11 +187,20 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/*----------*/
 			/* Annuler */
 			if (e.getSource() == this.menuiFichiersAnnuler)
+			{
+				if (this.ctrl.getLstFormes().size() <= 0) return;
 				this.ctrl.removeForme(this.ctrl.getFormeAt(this.ctrl.getLstFormes().size() - 1));
+				this.ctrl.majIhm();
+			}
 
 			/* Restorer */
 			if (e.getSource() == this.menuiFichiersRestorer)
-				this.ctrl.addForme(this.ctrl.getFormeSupprimerAt(UNDEFINED_CONDITION));
+			{
+				if (this.ctrl.getLstFormesSupprimer().size() <= 0) return;
+				// TODO : supprimer la fonction unRemoveForme pour utiliser la fonction addForme 
+				this.ctrl.unRemoveForme(this.ctrl.getFormeSupprimerAt(this.ctrl.getLstFormesSupprimer().size() - 1));
+				this.ctrl.majIhm();
+			}
 
 			/*-------------*/
 			/* Préférences */
