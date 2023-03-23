@@ -14,7 +14,7 @@ import metier.Metier;
 public class PanelPrincipale extends JPanel
 {
     private Controleur ctrl;
-    private PanelHaut panelHaut;
+    private PanelOutils panelHaut;
     private JPanel panelConteneur;
     private PanelPaint panelPaint;
     private JScrollPane scrollPane;
@@ -25,7 +25,7 @@ public class PanelPrincipale extends JPanel
         this.setLayout(new BorderLayout());
 
         /* Création des composants */
-        this.panelHaut      = new PanelHaut(ctrl);
+        this.panelHaut      = new PanelOutils(ctrl);
         this.panelConteneur = new JPanel();
         this.panelPaint     = new PanelPaint(ctrl, Metier.TAILLE_PLATEAU);
         this.panelConteneur.add(this.panelPaint);
