@@ -494,4 +494,3 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	}
 }
 
-

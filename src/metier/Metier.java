@@ -77,7 +77,7 @@ public class Metier
         this.chargerThemes(this.getThemeUsed());
 
 		/* Couleur sélectionné */
-		this.selectedColor = Color.BLACK;
+		this.selectedColor = this.hmColorTheme.get("foreground");
 		this.selectedForme = Forme.TYPE_LIGNE;
 		this.rempli        = false;
 		this.peindre       = false;

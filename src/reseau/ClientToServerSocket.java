@@ -1,5 +1,6 @@
 package reseau;
 
+import java.awt.Container;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -88,6 +89,7 @@ public class ClientToServerSocket extends Thread
     public void sendForme(Forme forme)
     {
         try {
+            oos.reset();
             oos.writeObject("newDrawing");
             oos.writeObject(forme);
 
@@ -99,12 +101,13 @@ public class ClientToServerSocket extends Thread
     public void majForme(Forme forme)
     {
         try {
-            oos.writeObject("majForme");
+            oos.reset();
+            oos.writeObject("majDrawing");
             oos.writeObject(forme);
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
     }
 
     @Override
@@ -120,7 +123,6 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("disconnect"))
                 {
                     this.Disconnect();
-                    continue;
                 }
                 
                 if (command.equals("drawings"))

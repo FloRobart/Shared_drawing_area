@@ -36,15 +36,12 @@ public class ServerToClientSocket extends Thread
         this.running = false;
     }
 
-    public void sendForme(Forme form)
+    public void sendForme(Forme forme)
     {
-        if (!this.running)
-        {
-            return;
-        }
         try {
             oos.writeObject("newDrawing");
-            oos.writeObject(form);
+            oos.writeObject(forme);
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,6 +85,8 @@ public class ServerToClientSocket extends Thread
                 {
                     System.out.println("Client requested drawing");
 
+                    // Send the drawing to the client
+
                     List<Forme> forms = this.serverThread.getCtrl().getLstFormes();
                     
                     oos.writeObject("drawings");
@@ -118,5 +117,6 @@ public class ServerToClientSocket extends Thread
 
         }
     }
-    
+
+
 }

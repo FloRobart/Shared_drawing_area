@@ -17,10 +17,10 @@ public class ServerThread extends Thread
     public ServerThread(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.serverToClientSockets = new ArrayList<ServerToClientSocket>();
         try
         {
             this.serverSocket = new ServerSocket(31337);
+            this.serverToClientSockets = new ArrayList<ServerToClientSocket>();
         }
         catch (Exception e)
         {
@@ -28,25 +28,6 @@ public class ServerThread extends Thread
             e.printStackTrace();
         }
     }
-
-    public void Stop()
-    {
-        try
-        {
-            this.serverSocket.close();
-        }
-        catch (Exception e)
-        {
-            System.err.println("Impossible de fermer le serveur");
-            e.printStackTrace();
-        }
-    }
-
-    public Controleur getCtrl()
-    {
-        return this.ctrl;
-    }
-
 
     @Override
     public void run()
@@ -83,6 +64,11 @@ public class ServerThread extends Thread
         {
             serverToClientSocket.majForme(forme);
         }
+    }
+
+    public Controleur getCtrl()
+    {
+        return this.ctrl;
     }
 
 }
