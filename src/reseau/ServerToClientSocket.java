@@ -1,5 +1,6 @@
 package reseau;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -32,6 +33,23 @@ public class ServerToClientSocket extends Thread
         this.running = false;
     }
 
+<<<<<<< HEAD
+=======
+    public void sendForme(Forme form)
+    {
+        if (!this.running)
+        {
+            return;
+        }
+        try {
+            oos.reset();
+            oos.writeObject("newDrawing");
+            oos.writeObject(form);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+>>>>>>> f77543b920a0c29b460a2f271a648a710a4fa3e5
 
 
     @Override
@@ -62,7 +80,25 @@ public class ServerToClientSocket extends Thread
 
                     // Send the drawing to the client
                     
+<<<<<<< HEAD
 
+=======
+                    oos.reset();
+                    oos.writeObject("drawings");
+                    oos.writeObject(forms);
+                    oos.flush();
+                }
+
+                if (command.equals("newDrawing"))
+                {
+                    Forme form = (Forme)ois.readObject();
+                    this.serverThread.getCtrl().getLstFormes().add(form);
+
+                    // Envoyer la forme à tous les clients
+
+                    this.serverThread.broadcastForme(form);
+                    this.serverThread.getCtrl().majIhm();
+>>>>>>> f77543b920a0c29b460a2f271a648a710a4fa3e5
                 }
 
             }

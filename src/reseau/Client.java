@@ -1,5 +1,11 @@
 package reseau;
 
+<<<<<<< HEAD
+=======
+import controleur.Controleur;
+import metier.Forme;
+
+>>>>>>> f77543b920a0c29b460a2f271a648a710a4fa3e5
 public class Client
 {
     
@@ -8,6 +14,11 @@ public class Client
     public Client()
     {
         this.clientToServerSocket = new ClientToServerSocket();
+    }
+
+    public void sendForme(Forme form)
+    {
+        this.clientToServerSocket.sendForme(form);
     }
 
     public Boolean Connect(String ip, int port, String name)

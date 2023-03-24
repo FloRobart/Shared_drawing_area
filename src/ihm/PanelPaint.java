@@ -175,6 +175,10 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent me)
     {
+        if (this.formeSelectionned != null)
+        {
+            this.ctrl.finaliseForme(this.formeSelectionned);
+        }
         if (me.getButton() == MouseEvent.BUTTON1)
         {
             if (this.currentShape != null)

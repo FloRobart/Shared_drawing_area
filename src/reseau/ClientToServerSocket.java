@@ -80,6 +80,18 @@ public class ClientToServerSocket extends Thread
 
     }
 
+    public void sendForme(Forme forme)
+    {
+        try {
+            oos.reset();
+            oos.writeObject("newDrawing");
+            oos.writeObject(forme);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run()
     {
@@ -94,9 +106,30 @@ public class ClientToServerSocket extends Thread
                 {
                     this.Disconnect();
                 }
+<<<<<<< HEAD
                 else
                 {
                     System.out.println("Commande inconnue");
+=======
+                
+                if (command.equals("drawings"))
+                {
+                    this.ctrl.getLstFormes().clear();
+                    List<Forme> lstFormes = (List<Forme>)ois.readObject();
+                    
+                    for (Forme forme : lstFormes)
+                    {
+                        this.ctrl.getLstFormes().add(forme);
+                    }
+                    this.ctrl.majIhm();
+                }
+
+                if (command.equals("newDrawing"))
+                {
+                    Forme forme = (Forme)ois.readObject();
+                    this.ctrl.getLstFormes().add(forme);
+                    this.ctrl.majIhm();
+>>>>>>> f77543b920a0c29b460a2f271a648a710a4fa3e5
                 }
 
             }
