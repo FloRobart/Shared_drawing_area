@@ -3,6 +3,9 @@ package reseau;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
+
+import metier.Forme;
 
 public class ServerToClientSocket extends Thread
 {
@@ -60,9 +63,22 @@ public class ServerToClientSocket extends Thread
                 {
                     System.out.println("Client requested drawing");
 
-                    // Send the drawing to the client
+                    List<Forme> forms = this.serverThread.getCtrl().getLstFormes();
                     
+                    oos.reset();
+                    oos.writeObject("drawings");
+                    oos.writeObject(forms);
+                    oos.flush();
+                }
 
+                if (command.equals("newDrawing"))
+                {
+                    Forme form = (Forme)ois.readObject();
+                    this.serverThread.getCtrl().addForme(form);
+
+                    // Envoyer la forme à tous les clients
+
+                    this.serverThread.broadcastForme(form);
                 }
 
             }

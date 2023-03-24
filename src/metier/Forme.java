@@ -6,7 +6,7 @@ import static metier.Metier.TAILLE_PLATEAU;
 import java.awt.Color;
 
 
-public class Forme
+public class Forme implements java.io.Serializable
 {
     public static final int TYPE_CERCLE = 0;
     public static final int TYPE_LIGNE  = 1;

@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import controleur.Controleur;
+import metier.Forme;
 
 public class ServerThread extends Thread
 {
@@ -65,6 +66,14 @@ public class ServerThread extends Thread
                 System.err.println("Impossible d'accepter un nouveau client");
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void broadcastForme(Forme form)
+    {
+        for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
+        {
+            this.serverToClientSocket.sendForme(form);
         }
     }
 

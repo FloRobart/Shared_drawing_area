@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 import controleur.Controleur;
+import metier.Forme;
 
 public class ClientToServerSocket extends Thread
 {
@@ -96,10 +98,24 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("disconnect"))
                 {
                     this.Disconnect();
+                    continue;
                 }
-                else
+                
+                if (command.equals("drawings"))
                 {
-                    System.out.println("Commande inconnue");
+                    this.ctrl.getLstFormes().clear();
+                    List<Forme> lstFormes = (List<Forme>)ois.readObject();
+                    
+                    for (Forme forme : lstFormes)
+                    {
+                        this.ctrl.getLstFormes().add(forme);
+                    }
+                }
+
+                if (command.equals("newDrawing"))
+                {
+                    Forme forme = (Forme)ois.readObject();
+                    this.ctrl.getLstFormes().add(forme);
                 }
 
             }
