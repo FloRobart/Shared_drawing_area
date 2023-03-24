@@ -3,6 +3,8 @@ package controleur;
 import ihm.FramePrinciple;
 import metier.Forme;
 import metier.Metier;
+import reseau.Client;
+import reseau.ServerThread;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Controleur
 {
     private Metier metier;
     private FramePrinciple ihm;
+    private ServerThread serverThread;
+    private Client client;
 
 
     public Controleur()
@@ -242,6 +246,29 @@ public class Controleur
      */
     public String[] getEnsClesThemes() { return this.metier.getEnsClesThemes(); }
 
+
+    public Boolean startServer()
+    {
+        if (this.serverThread == null)
+        {
+            this.serverThread = new ServerThread(this);
+            this.serverThread.start();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Boolean joinServer()
+    {
+        this.client = new Client(this);
+        this.client.Connect("127.0.0.1", 31337, "JoeTesto");
+
+
+        return true;
+    }
 
 
     public static void main(String[] args)

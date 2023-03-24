@@ -5,16 +5,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import controleur.Controleur;
+
 public class ClientToServerSocket extends Thread
 {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private Socket socket;
     private Boolean running;
+    private Controleur ctrl;
     
-    public ClientToServerSocket()
+    public ClientToServerSocket(Controleur ctrl)
     {
-
+        this.ctrl = ctrl;
     }
 
     public Boolean Connect(String ip, int port)

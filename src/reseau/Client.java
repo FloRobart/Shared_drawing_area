@@ -1,13 +1,17 @@
 package reseau;
 
+import controleur.Controleur;
+
 public class Client
 {
     
     private ClientToServerSocket clientToServerSocket;
+    private Controleur ctrl;
 
-    public Client()
+    public Client(Controleur ctrl)
     {
-        this.clientToServerSocket = new ClientToServerSocket();
+        this.ctrl = ctrl;
+        this.clientToServerSocket = new ClientToServerSocket(this.ctrl);
     }
 
     public Boolean Connect(String ip, int port, String name)

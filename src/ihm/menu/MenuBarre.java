@@ -94,8 +94,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*--------------*/
 		/* Multi-Joueur */
 		/*--------------*/
-		this.menuPreferences = new JMenu("Multi-Joueur");
-		this.menuPreferences.setMnemonic('P');
+		this.menuMultiJoueur = new JMenu("Multi-Joueur");
+		this.menuMultiJoueur.setMnemonic('M');
 
 		/* Créer un serveur */
 		this.menuiMultiJoueurCreerServer = new JMenuItem("Créer un serveur");
@@ -106,8 +106,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*-------------*/
 		/* Préférences */
 		/*-------------*/
-		this.menuMultiJoueur = new JMenu("Préférences");
-		this.menuMultiJoueur.setMnemonic('M');
+		this.menuPreferences = new JMenu("Préférences");
+		this.menuPreferences.setMnemonic('P');
 
 
 
@@ -298,12 +298,15 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/* Créer un serveur */
 			if (e.getSource() == this.menuiMultiJoueurCreerServer)
 			{
-				
+				this.ctrl.startServer();
+				System.out.println("Serveur démarré");
 			}
 
 			/* Rejoindre un serveur */
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
 			{
+				this.ctrl.joinServer();
+
 				
 			}
 
@@ -429,6 +432,20 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuFichiers.setBackground(backGeneralColor);
 		this.menuFichiers.setForeground(foreGeneralColor);
 		
+		/*-------------*/
+		/* MutliJoueur */
+		/*-------------*/
+
+		this.menuMultiJoueur.setBackground(backGeneralColor);
+		this.menuMultiJoueur.setForeground(foreGeneralColor);
+
+		/* Créer une partie */
+		this.menuiMultiJoueurCreerServer.setBackground(backGeneralColor);
+		this.menuiMultiJoueurCreerServer.setForeground(foreGeneralColor);
+
+		/* Rejoindre une partie */
+		this.menuiMultiJoueurRejoindreServer.setBackground(backGeneralColor);
+		this.menuiMultiJoueurRejoindreServer.setForeground(foreGeneralColor);
 
 
 		/*------------*/
