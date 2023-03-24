@@ -35,6 +35,10 @@ public class ServerToClientSocket extends Thread
         this.running = false;
     }
 
+    public void sendForme(Forme form)
+    {
+
+    }
 
 
     @Override

@@ -73,7 +73,7 @@ public class ServerThread extends Thread
     {
         for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
         {
-            this.serverToClientSocket.sendForme(form);
+            serverToClientSocket.sendForme(form);
         }
     }
 
