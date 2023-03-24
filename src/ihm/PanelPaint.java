@@ -131,6 +131,8 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                 Forme forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
                 this.ctrl.addForme(forme);
                 this.currentShape = forme;
+                this.ctrl.finaliseForme(this.currentShape);
+
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
@@ -154,7 +156,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseDragged(MouseEvent me)
     {
         if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.currentShape == null) return;
-
         if (this.click == MouseEvent.BUTTON1)
         {
             this.currentShape.setX(this.currentShape.getXOrig(), me.getX());
@@ -169,6 +170,10 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             this.currentShape.setXFin(this.currentShape.getXFin() + me.getX());
             this.currentShape.setYFin(this.currentShape.getYFin() + me.getY());
         }
+        if (this.currentShape != null)
+        {
+            this.ctrl.ihmMajForme(this.currentShape);
+        }
 
         this.repaint();
     }
@@ -178,7 +183,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (this.currentShape != null)
         {
-            this.ctrl.finaliseForme(this.currentShape);
+            this.ctrl.ihmMajForme(this.currentShape);
         }
         if (me.getButton() == MouseEvent.BUTTON1)
         {
