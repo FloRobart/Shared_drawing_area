@@ -295,7 +295,7 @@ public class Controleur
     {
         for (Forme f : this.getLstFormes())
         {
-            if (f.getId() == forme.getId())
+            if (f.getId().equals(forme.getId()))
             {
                 for (java.lang.reflect.Field field : f.getClass().getDeclaredFields())
                 {

@@ -9,8 +9,6 @@ import java.awt.Color;
 public class Forme implements java.io.Serializable
 {
 
-    public static int id_compteur = 0;
-
     public static final int TYPE_CERCLE = 0;
     public static final int TYPE_LIGNE  = 1;
     public static final int TYPE_RECT   = 2;
@@ -28,12 +26,13 @@ public class Forme implements java.io.Serializable
     private int xOrig;
     private int yOrig;
 
-    private int id;
+    private String id;
 
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
     {
         
-        this.id = id_compteur++;
+        // make if a guid
+        this.id = java.util.UUID.randomUUID().toString();
         this.xDeb = Math.min(xDeb, xFin);
         this.yDeb = Math.min(yDeb, yFin);
         this.xFin = Math.max(xDeb, xFin);
@@ -62,7 +61,7 @@ public class Forme implements java.io.Serializable
     public boolean isRempli  () { return rempli; }
     public Color   getCouleur() { return couleur; }
     public String  getText   () { return text; }
-    public int     getId     () { return id; }
+    public String  getId     () { return id; }
 
     public boolean isIn(int x, int y)
     {
