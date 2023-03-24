@@ -75,6 +75,8 @@ public class PanelOutils extends JPanel implements ActionListener
         this.btnCouleur.setIcon(this.iconCouleur());
         this.btnPeindre.setIcon(this.iconPeindre());
 
+        /* Bordure */
+        this.btnLigne  .setBorder(this.selectedBorder);
 
 
         /*----------------------*/
