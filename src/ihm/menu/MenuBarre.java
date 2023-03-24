@@ -29,6 +29,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 	/* Menus */
 	private JMenu menuFichiers;
+	private JMenu menuMultiJoueur;
 	private JMenu menuPreferences;
 	private JMenu menuAide;
 
@@ -38,6 +39,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenuItem menuiFichiersSauvegarder;
 	private JMenuItem menuiFichiersAnnuler;
 	private JMenuItem menuiFichiersRestorer;
+
+	/* Fichier */
+	private JMenuItem menuiMultiJoueurCreerServer;
+	private JMenuItem menuiMultiJoueurRejoindreServer;
 
 	/* Préférences */
 	private JMenu     menuiPreferencesThemes;
@@ -86,13 +91,25 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuiFichiersRestorer = new JMenuItem("Restorer");
 		this.menuiFichiersRestorer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
 
+		/*--------------*/
+		/* Multi-Joueur */
+		/*--------------*/
+		this.menuPreferences = new JMenu("Multi-Joueur");
+		this.menuPreferences.setMnemonic('P');
 
+		/* Créer un serveur */
+		this.menuiMultiJoueurCreerServer = new JMenuItem("Créer un serveur");
+
+		/* Rejoindre un serveur */
+		this.menuiMultiJoueurRejoindreServer = new JMenuItem("Rejoindre un serveur");
 
 		/*-------------*/
 		/* Préférences */
 		/*-------------*/
-		this.menuPreferences = new JMenu("Préférences");
-		this.menuPreferences.setMnemonic('P');
+		this.menuMultiJoueur = new JMenu("Préférences");
+		this.menuMultiJoueur.setMnemonic('M');
+
+
 
 		/* Thèmes */
 		this.menuiPreferencesThemes       = new JMenu    ("Thèmes ");
@@ -142,6 +159,19 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 		/* Ajout de tout à la JMenuBar */
 		this.add(menuFichiers);
+
+		/*--------------*/
+		/* Multi-Joueur */
+		/*--------------*/
+
+		/* Créer un serveur */
+		this.menuMultiJoueur.add(this.menuiMultiJoueurCreerServer);
+
+		/* Rejoindre un serveur */
+		this.menuMultiJoueur.add(this.menuiMultiJoueurRejoindreServer);
+
+		/* Ajout de tout à la JMenuBar */
+		this.add(menuMultiJoueur);
 
 
 		/*------------*/
@@ -194,7 +224,15 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/* Restorer */
 		this.menuiFichiersRestorer.addActionListener(this);
 
+		/*--------------*/
+		/* Multi-Joueur */
+		/*--------------*/
 
+		/* Créer un serveur */
+		this.menuiMultiJoueurCreerServer.addActionListener(this);
+
+		/* Rejoindre un serveur */
+		this.menuiMultiJoueurRejoindreServer.addActionListener(this);
 
 		/*-------------*/
 		/* Préférences */
@@ -251,6 +289,22 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			{
 				this.ctrl.unRemoveForme();
 				this.ctrl.majIhm();
+			}
+		
+			/*--------------*/
+			/* Multi-Joueur */
+			/*--------------*/
+
+			/* Créer un serveur */
+			if (e.getSource() == this.menuiMultiJoueurCreerServer)
+			{
+				
+			}
+
+			/* Rejoindre un serveur */
+			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
+			{
+				
 			}
 
 			/*-------------*/
