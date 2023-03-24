@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -11,8 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import controleur.Controleur;
+import metier.Forme;
 
 
 public class PanelOutils extends JPanel implements ActionListener
@@ -29,6 +32,9 @@ public class PanelOutils extends JPanel implements ActionListener
     private JButton btnCouleur;
     private JButton btnPeindre;
 
+    private Border defaultBorder;
+    private Border selectedBorder;
+
 
     public PanelOutils(Controleur ctrl)
     {
@@ -37,34 +43,37 @@ public class PanelOutils extends JPanel implements ActionListener
         /*-------------------------*/
         /* Création des composants */
         /*-------------------------*/
-        btnLigne   = new JButton("");
-        btnCercle  = new JButton("");
-        btnCarre   = new JButton("");
-        btnTexte   = new JButton("");
-        btnRempli  = new JButton("");
-        btnCouleur = new JButton("");
-        btnPeindre = new JButton("");
+        this.btnLigne   = new JButton("");
+        this.btnCercle  = new JButton("");
+        this.btnCarre   = new JButton("");
+        this.btnTexte   = new JButton("");
+        this.btnRempli  = new JButton("");
+        this.btnCouleur = new JButton("");
+        this.btnPeindre = new JButton("");
+
+        this.defaultBorder  = this.btnLigne.getBorder();
+        this.selectedBorder = BorderFactory.createBevelBorder(1, this.ctrl.getTheme().get("enableColor"), this.ctrl.getTheme().get("enableColor"));
 
         /*-----------------------------*/
         /* Modification des composants */
         /*-----------------------------*/
         /* Taille */
-        btnLigne  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnCercle .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnCarre  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnTexte  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnRempli .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnCouleur.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
-        btnPeindre.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnLigne  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnCercle .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnCarre  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnTexte  .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnRempli .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnCouleur.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.btnPeindre.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
 
         /* Couleur et dessins */
-        btnLigne.setIcon(this.iconLigne());
-        btnCercle.setIcon(this.iconCercle());
-        btnCarre.setIcon(this.iconCarre());
-        btnTexte.setIcon(this.iconTexte());
-        btnRempli.setIcon(this.iconRempli());
-        btnCouleur.setIcon(this.iconCouleur());
-        btnPeindre.setIcon(this.iconPeindre());
+        this.btnLigne  .setIcon(this.iconLigne  ());
+        this.btnCercle .setIcon(this.iconCercle ());
+        this.btnCarre  .setIcon(this.iconCarre  ());
+        this.btnTexte  .setIcon(this.iconTexte  ());
+        this.btnRempli .setIcon(this.iconRempli ());
+        this.btnCouleur.setIcon(this.iconCouleur());
+        this.btnPeindre.setIcon(this.iconPeindre());
 
 
 
@@ -115,50 +124,84 @@ public class PanelOutils extends JPanel implements ActionListener
         /*---------------------*/
         /* Ajout des listeners */
         /*---------------------*/
-        btnLigne  .addActionListener(this);
-        btnCercle .addActionListener(this);
-        btnCarre  .addActionListener(this);
-        btnTexte  .addActionListener(this);
-        btnRempli .addActionListener(this);
-        btnCouleur.addActionListener(this);
-        btnPeindre.addActionListener(this);
+        this.btnLigne  .addActionListener(this);
+        this.btnCercle .addActionListener(this);
+        this.btnCarre  .addActionListener(this);
+        this.btnTexte  .addActionListener(this);
+        this.btnRempli .addActionListener(this);
+        this.btnCouleur.addActionListener(this);
+        this.btnPeindre.addActionListener(this);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        if (ae.getSource() == btnLigne)
-        {
-            //this.ctrl.setMode("Ligne");
-        }
-        else if (ae.getSource() == btnCercle)
-        {
-            //this.ctrl.setMode("Cercle");
-        }
-        else if (ae.getSource() == btnCarre)
-        {
-            //this.ctrl.setMode("Carre");
-        }
-        else if (ae.getSource() == btnTexte)
-        {
-            //this.ctrl.setMode("Texte");
-        }
-        else if (ae.getSource() == btnRempli)
-        {
-            //this.ctrl.setMode("Rempli");
-        }
-        else if (ae.getSource() == btnCouleur)
+        if (ae.getSource() == this.btnCouleur)
         {
             Color couleur = JColorChooser.showDialog(this, "Choisissez une couleur", this.ctrl.getTheme().get("foreground"));
             if (couleur != null)
                 this.ctrl.setSelectedColor(couleur);
 
             this.majIhm();
+            return;
         }
-        else if (ae.getSource() == btnPeindre)
+
+        if (ae.getSource() == this.btnRempli)
         {
-            //this.ctrl.setMode("Peindre");
+            this.btnRempli.setBorder(this.btnRempli.getBorder() == this.selectedBorder ? this.defaultBorder : this.selectedBorder);
+
+            this.ctrl.setRempli(!this.ctrl.getRempli());
+
+            this.majIhm();
+            return;
+        }
+
+        this.btnLigne  .setBorder(this.defaultBorder);
+        this.btnCercle .setBorder(this.defaultBorder);
+        this.btnCarre  .setBorder(this.defaultBorder);
+        this.btnTexte  .setBorder(this.defaultBorder);
+        this.btnPeindre.setBorder(this.defaultBorder);
+        this.ctrl.setPeindre(false);
+
+        if (ae.getSource() == this.btnLigne)
+        {
+            this.btnLigne.setBorder(this.selectedBorder);
+            this.ctrl.setSelectedTypeForme(Forme.TYPE_LIGNE);
+
+            return;
+        }
+        
+        if (ae.getSource() == this.btnCercle)
+        {
+            this.btnCercle.setBorder(this.selectedBorder);
+            this.ctrl.setSelectedTypeForme(Forme.TYPE_CERCLE);
+
+            return;
+        }
+        
+        if (ae.getSource() == this.btnCarre)
+        {
+            this.btnCarre.setBorder(this.selectedBorder);
+            this.ctrl.setSelectedTypeForme(Forme.TYPE_RECT);
+
+            return;
+        }
+        
+        if (ae.getSource() == this.btnTexte)
+        {
+            this.btnTexte.setBorder(this.selectedBorder);
+            this.ctrl.setSelectedTypeForme(Forme.TYPE_TEXT);
+
+            return;
+        }
+        
+        if (ae.getSource() == this.btnPeindre)
+        {
+            this.btnPeindre.setBorder(this.btnPeindre.getBorder() == this.selectedBorder ? this.defaultBorder : this.selectedBorder);
+            this.ctrl.setPeindre(!this.ctrl.getPeindre());
+
+            return;
         }
     }
 
@@ -222,7 +265,10 @@ public class PanelOutils extends JPanel implements ActionListener
                 /* Dessins du cercle */
                 g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
-                g2.drawOval(posX, posY, taille, taille);
+                if (ctrl.getRempli())
+                    g2.fillOval(posX, posY, taille, taille);
+                else
+                    g2.drawOval(posX, posY, taille, taille);
             }
 
             @Override
@@ -257,7 +303,10 @@ public class PanelOutils extends JPanel implements ActionListener
                 /* Dessins du carré */
                 g2.setColor(ctrl.getTheme().get("foreground"));
                 g2.setStroke(new BasicStroke(2));
-                g2.drawRect(posX, posY, taille, taille);
+                if (ctrl.getRempli())
+                    g2.fillRect(posX, posY, taille, taille);
+                else
+                    g2.drawRect(posX, posY, taille, taille);
             }
 
             @Override
@@ -435,6 +484,8 @@ public class PanelOutils extends JPanel implements ActionListener
      */
     public void majIhm()
     {
+        this.btnCercle .setIcon(this.iconCercle ());
+        this.btnCarre  .setIcon(this.iconCarre  ());
         this.btnCouleur.setIcon(this.iconCouleur());
         this.btnPeindre.setIcon(this.iconPeindre());
     }

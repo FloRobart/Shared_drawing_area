@@ -87,6 +87,42 @@ public class Controleur
 	public Color getSelectedColor() { return this.metier.getSelectedColor(); }
 
     /**
+	 * Permet de modifier la forme sélectionné.
+	 * @param forme : nouvelle forme sélectionné.
+	 */
+	public void setSelectedTypeForme(int forme) { this.metier.setSelectedTypeForme(forme); }
+
+	/**
+	 * Permet de récupérer la forme sélectionné.
+	 * @return la forme sélectionné.
+	 */
+	public int getSelectedTypeForme() { return this.metier.getSelectedTypeForme(); }
+
+	/**
+	 * Permet de modifier le remplissage.
+	 * @param rempli : nouveau remplissage.
+	 */
+	public void setRempli(boolean rempli) { this.metier.setRempli(rempli); }
+
+	/**
+	 * Permet de récupérer le remplissage.
+	 * @return le remplissage.
+	 */
+	public boolean getRempli() { return this.metier.getRempli(); }
+
+    /**
+	 * Permet de définir le mode peindre.
+	 * @return le remplissage.
+	 */
+	public void setPeindre(boolean peindre) { this.metier.setPeindre(peindre); }
+
+	/**
+	 * Permet de savoir si on doit peindre ou non.
+	 * @return le remplissage.
+	 */
+	public boolean getPeindre() { return this.metier.getPeindre(); }
+
+    /**
      * Permet de mettre à jour l'IHM
      */
     public void majIhm() { this.ihm.majIhm(); }

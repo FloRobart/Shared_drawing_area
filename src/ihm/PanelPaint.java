@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -17,7 +19,7 @@ import controleur.Controleur;
 import metier.Forme;
 
 
-public class PanelPaint extends JPanel implements MouseListener, MouseMotionListener
+public class PanelPaint extends JPanel implements MouseListener, MouseMotionListener, KeyListener
 {
     private Controleur ctrl;
 
@@ -40,6 +42,8 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         /* Ajout des listeners */
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+
+        this.addKeyListener(this);
     }
 
 
@@ -54,23 +58,41 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             g2.setColor(forme.getCouleur());
             g2.setStroke(new BasicStroke(5));
+
+            /* Cercle */
+            if (forme.getType() == Forme.TYPE_CERCLE)
+            {
+                if (forme.isRempli())
+                    g2.fillOval(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
+                else
+                    g2.drawOval(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
+
+                continue;
+            }
+
+            /* Carre */
             if (forme.getType() == Forme.TYPE_RECT)
             {
                 if (forme.isRempli())
-                    g2.fillRect(forme.getXDeb(), forme.getYDeb(), forme.getXDeb() - forme.getXFin(), forme.getXDeb() - forme.getYFin());
+                    g2.fillRect(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
                 else
-                    g2.drawRect(forme.getXDeb(), forme.getYDeb(), forme.getXDeb() - forme.getXFin(), forme.getXDeb() - forme.getYFin());
+                    g2.drawRect(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
+
+                continue;
             }
-            else if (forme.getType() == Forme.TYPE_LIGNE)
+
+            /* Ligne */
+            if (forme.getType() == Forme.TYPE_LIGNE)
             {
                 g2.drawLine(forme.getXDeb(), forme.getYDeb(), forme.getXFin(), forme.getYFin());
+                continue;
             }
-            else if (forme.getType() == Forme.TYPE_CERCLE)
+
+            /* Texte */
+            if (forme.getType() == Forme.TYPE_TEXT)
             {
-                if (forme.isRempli())
-                    g2.fillOval(forme.getXDeb(), forme.getYDeb(), Math.max(forme.getXDeb() - forme.getXFin(), forme.getXFin() - forme.getXDeb()), Math.max(forme.getYDeb() - forme.getYFin(), forme.getYFin() - forme.getYDeb()));
-                else
-                    g2.drawOval(forme.getXDeb(), forme.getYDeb(), forme.getXFin() - forme.getXDeb(), forme.getYFin() - forme.getYDeb());
+                //g2.drawString(forme.getText(), forme.getXDeb(), forme.getYDeb());
+                continue;
             }
         }
     }
@@ -82,10 +104,32 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            this.click = MouseEvent.BUTTON1;
-            Forme forme = new Forme(me.getX(), me.getY(), Forme.TYPE_CERCLE, false, this.ctrl.getSelectedColor());
-            this.ctrl.addForme(forme);
-            this.formeSelectionned = forme;
+            if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+            {
+                this.ctrl.setSelectedTypeForme(Forme.TYPE_TEXT);
+                
+
+                return;
+            }
+
+            if (this.ctrl.getPeindre())
+            {
+                this.click = -1;
+                for (Forme f : this.ctrl.getLstFormes())
+                    if (f.isIn(me.getX(), me.getY()))
+                    {
+                        f.setRempli(!f.isRempli());
+                        f.setCouleur(this.ctrl.getSelectedColor());
+                        return;
+                    }
+            }
+            else
+            {
+                this.click = MouseEvent.BUTTON1;
+                Forme forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
+                this.ctrl.addForme(forme);
+                this.formeSelectionned = forme;
+            }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
@@ -153,6 +197,19 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     }
 
     @Override
+    public void keyPressed(KeyEvent ke)
+    {
+        System.out.println("key pressed : " + ke.getKeyCode());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke)
+    {
+        System.out.println("key released : " + ke.getKeyCode());
+    }
+
+
+    @Override
     public void mouseMoved(MouseEvent me) {}
     @Override
     public void mouseEntered(MouseEvent me) {}
@@ -160,4 +217,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseExited(MouseEvent me) {}
     @Override
     public void mouseClicked(MouseEvent me) {}
+
+    @Override
+    public void keyTyped(KeyEvent ke) {}
 }

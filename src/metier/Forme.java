@@ -20,6 +20,7 @@ public class Forme
     private int type;
     private boolean rempli;
     private Color couleur;
+    private String text;
 
 
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
@@ -31,6 +32,7 @@ public class Forme
         this.type = type;
         this.rempli = rempli;
         this.couleur = couleur;
+        this.text = "";
     }
 
     public Forme(int xDeb, int yDeb, int type, boolean rempli, Color couleur)
@@ -45,6 +47,7 @@ public class Forme
     public int     getType   () { return type; }
     public boolean isRempli  () { return rempli; }
     public Color   getCouleur() { return couleur; }
+    public String  getText   () { return text; }
 
     public boolean isIn(int x, int y)
     {
@@ -77,6 +80,11 @@ public class Forme
     public void setType   (int   type    ) { this.type = type; }
     public void setRempli (boolean rempli) { this.rempli = rempli; }
     public void setCouleur(Color couleur ) { this.couleur = couleur; }
+    public void setText   (String text   )
+    {
+        if (type != TYPE_TEXT) throw new RuntimeException("La forme n'est pas un texte");
+        this.text = text;
+    }
 
 
     public void serialisable()

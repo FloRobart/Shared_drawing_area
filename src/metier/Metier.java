@@ -48,6 +48,9 @@ public class Metier
 	private List<Forme> lstFormes;
 	private List<Forme> lstFormesSupprimer;
 	private Color 	    selectedColor;
+	private int         selectedForme;
+	private boolean     rempli;
+	private boolean     peindre;
 
 
     /* Thèmes */
@@ -75,6 +78,9 @@ public class Metier
 
 		/* Couleur sélectionné */
 		this.selectedColor = this.hmColorTheme.get("foreground");
+		this.selectedForme = Forme.TYPE_LIGNE;
+		this.rempli        = false;
+		this.peindre       = false;
     }
 
 	/*====================*/
@@ -154,6 +160,42 @@ public class Metier
 	 * @return la couleur sélectionné.
 	 */
 	public Color getSelectedColor() { return this.selectedColor; }
+
+	/**
+	 * Permet de modifier la forme sélectionné.
+	 * @param forme : nouvelle forme sélectionné.
+	 */
+	public void setSelectedTypeForme(int forme) { this.selectedForme = forme; }
+
+	/**
+	 * Permet de récupérer la forme sélectionné.
+	 * @return la forme sélectionné.
+	 */
+	public int getSelectedTypeForme() { return this.selectedForme; }
+
+	/**
+	 * Permet de modifier le remplissage.
+	 * @param rempli : nouveau remplissage.
+	 */
+	public void setRempli(boolean rempli) { this.rempli = rempli; }
+
+	/**
+	 * Permet de récupérer le remplissage.
+	 * @return le remplissage.
+	 */
+	public boolean getRempli() { return this.rempli; }
+
+	/**
+	 * Permet de définir le mode peindre.
+	 * @return le remplissage.
+	 */
+	public void setPeindre(boolean peindre) { this.peindre = peindre; }
+
+	/**
+	 * Permet de savoir si on doit peindre ou non.
+	 * @return le remplissage.
+	 */
+	public boolean getPeindre() { return this.peindre; }
 
 
 
