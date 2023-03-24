@@ -22,17 +22,25 @@ public class Forme
     private Color couleur;
     private String text;
 
+    private int xOrig;
+    private int yOrig;
+
 
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
     {
-        this.xDeb = xDeb;
-        this.yDeb = yDeb;
-        this.xFin = xFin;
-        this.yFin = yFin;
+        
+        
+        this.xDeb = Math.min(xDeb, xFin);
+        this.yDeb = Math.min(yDeb, yFin);
+        this.xFin = Math.max(xDeb, xFin);
+        this.yFin = Math.max(yDeb, yFin);
         this.type = type;
         this.rempli = rempli;
         this.couleur = couleur;
         this.text = "";
+
+        this.xOrig = xDeb;
+        this.yOrig = yDeb;
     }
 
     public Forme(int xDeb, int yDeb, int type, boolean rempli, Color couleur)
@@ -42,6 +50,8 @@ public class Forme
 
     public int     getXDeb   () { return xDeb; }
     public int     getYDeb   () { return yDeb; }
+    public int     getXOrig  () { return xOrig;}
+    public int     getYOrig  () { return yOrig;}
     public int     getXFin   () { return xFin; }
     public int     getYFin   () { return yFin; }
     public int     getType   () { return type; }
@@ -86,6 +96,20 @@ public class Forme
         this.text = text;
     }
 
+    public void setX(int x1, int x2) {
+        this.xDeb = this.type == TYPE_LIGNE ? x1 : min(x1, x2);
+        this.xFin = this.type == TYPE_LIGNE ? x2 : max(x1, x2);
+    }
+
+    public void setY(int y1, int y2) {
+        this.yDeb = this.type == TYPE_LIGNE ? y1 : min(y1, y2);
+        this.yFin = this.type == TYPE_LIGNE ? y2 : max(y1, y2);
+    }
+
+    public void resetOrig() {
+        xOrig = xDeb;
+        yOrig = yDeb;
+    }
 
     public void serialisable()
     {

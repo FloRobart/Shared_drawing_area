@@ -24,14 +24,14 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     private Controleur ctrl;
 
     private int click;
-    private Forme formeSelectionned;
+    private Forme currentShape;
 
 
     public PanelPaint(Controleur ctrl, int[] taillePlateau)
     {
         this.ctrl  = ctrl;
         this.click = -1;
-        this.formeSelectionned = null;
+        this.currentShape = null;
         this.setBorder(BorderFactory.createLineBorder(this.ctrl.getTheme().get("titlesBackground"), 2));
 
 		this.setSize(taillePlateau[0], taillePlateau[1]);
@@ -129,7 +129,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                 this.click = MouseEvent.BUTTON1;
                 Forme forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
                 this.ctrl.addForme(forme);
-                this.formeSelectionned = forme;
+                this.currentShape = forme;
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
@@ -139,7 +139,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             {
                 if (f.isIn(me.getX(), me.getY()))
                 {
-                    this.formeSelectionned = f;
+                    this.currentShape = f;
                     break;
                 }
             }
@@ -152,20 +152,21 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent me)
     {
-        if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.formeSelectionned == null) return;
+        if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.currentShape == null) return;
 
         if (this.click == MouseEvent.BUTTON1)
         {
-            this.formeSelectionned.setXFin(me.getX());
-            this.formeSelectionned.setYFin(me.getY());
+            this.currentShape.setX(this.currentShape.getXOrig(), me.getX());
+            this.currentShape.setY(this.currentShape.getYOrig(), me.getY());
         }
         else if (this.click == MouseEvent.BUTTON3)
         {
-            this.formeSelectionned.setXDeb(me.getX());
-            this.formeSelectionned.setYDeb(me.getY());
+            //TODO: ca parce que ca marche pas
+            this.currentShape.setXDeb(me.getX());
+            this.currentShape.setYDeb(me.getY());
 
-            this.formeSelectionned.setXFin(this.formeSelectionned.getXFin() + me.getX());
-            this.formeSelectionned.setYFin(this.formeSelectionned.getYFin() + me.getY());
+            this.currentShape.setXFin(this.currentShape.getXFin() + me.getX());
+            this.currentShape.setYFin(this.currentShape.getYFin() + me.getY());
         }
 
         this.repaint();
@@ -176,21 +177,17 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            if (this.formeSelectionned != null)
+            if (this.currentShape != null)
             {
-                if (this.formeSelectionned.getType() != Forme.TYPE_LIGNE && (this.formeSelectionned.getXFin() - this.formeSelectionned.getXDeb() < 0 || this.formeSelectionned.getYFin() - this.formeSelectionned.getYDeb() < 0))
-                {
-                    this.ctrl.getLstFormes().remove(this.formeSelectionned);
-                    this.formeSelectionned = null;
-                }
+                this.currentShape.resetOrig();
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
-            if (this.formeSelectionned != null)
+            if (this.currentShape != null)
             {
                 // afficher une popup pour supprimer la forme et la modifier
-                this.formeSelectionned = null;
+                this.currentShape = null;
             }
         }
 
