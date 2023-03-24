@@ -191,10 +191,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent me)
     {
-        if (this.currentShape != null)
-        {
-            this.ctrl.ihmMajForme(this.currentShape);
-        }
         if (me.getButton() == MouseEvent.BUTTON1)
         {
             if (this.currentShape != null)
@@ -226,6 +222,9 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                 this.currentShape = null;
             }
         }
+
+        if (this.currentShape != null)
+            this.ctrl.ihmMajForme(this.currentShape);
 
         this.repaint();
     }
