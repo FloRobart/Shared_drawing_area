@@ -94,6 +94,7 @@ public class ServerToClientSocket extends Thread
                     // Envoyer la forme à tous les clients
 
                     this.serverThread.broadcastForme(form);
+                    this.serverThread.getCtrl().majIhm();
                 }
 
             }

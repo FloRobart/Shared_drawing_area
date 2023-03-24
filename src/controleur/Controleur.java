@@ -65,12 +65,15 @@ public class Controleur
 	public void addForme(Forme forme)
     {
         this.metier.addForme(forme);
+    }
+
+    public void finaliseForme(Forme forme)
+    {
         if (this.client != null)
             this.client.sendForme(forme);
-        
+    
         if (this.serverThread != null)
             this.serverThread.broadcastForme(forme);
-
     }
 
     /**

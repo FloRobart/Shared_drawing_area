@@ -122,12 +122,14 @@ public class ClientToServerSocket extends Thread
                     {
                         this.ctrl.getLstFormes().add(forme);
                     }
+                    this.ctrl.majIhm();
                 }
 
                 if (command.equals("newDrawing"))
                 {
                     Forme forme = (Forme)ois.readObject();
                     this.ctrl.getLstFormes().add(forme);
+                    this.ctrl.majIhm();
                 }
 
             }
