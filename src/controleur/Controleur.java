@@ -97,13 +97,14 @@ public class Controleur
 	 * @param forme : forme à rétablir.
 	 */
 	public void unRemoveForme() {
+        this.metier.unRemoveForme();
+
         if (this.client != null)
             this.client.unRemoveForme(this.metier.getLstFormes().get(this.metier.getLstFormes().size() - 1));
         
         if (this.serverThread != null)
             this.serverThread.broadcastUnRemoveForme(this.metier.getLstFormes().get(this.metier.getLstFormes().size() - 1));
         
-        this.metier.unRemoveForme();
 
     }
 
