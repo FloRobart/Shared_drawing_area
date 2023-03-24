@@ -96,7 +96,17 @@ public class Controleur
 	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes et la supprime de la liste des formes supprimé.
 	 * @param forme : forme à rétablir.
 	 */
-	public void unRemoveForme() { this.metier.unRemoveForme(); }
+	public void unRemoveForme() {
+        this.metier.unRemoveForme();
+
+        if (this.client != null)
+            this.client.unRemoveForme(this.metier.getLstFormes().get(this.metier.getLstFormes().size() - 1));
+        
+        if (this.serverThread != null)
+            this.serverThread.broadcastUnRemoveForme(this.metier.getLstFormes().get(this.metier.getLstFormes().size() - 1));
+        
+
+    }
 
     /**
 	 * Permet de modifier la couleur sélectionné.
@@ -350,6 +360,19 @@ public class Controleur
             if (f.getId().equals(id))
             {
                 this.removeForme(f);
+                break;
+            }
+        }
+        this.majIhm();
+    }
+
+    public void unRemoveFormeNetwork(String id)
+    {
+        for (Forme f : this.metier.getLstFormesSupprimer())
+        {
+            if (f.getId().equals(id))
+            {
+                this.metier.unRemoveForme(f);
                 break;
             }
         }

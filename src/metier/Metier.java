@@ -149,6 +149,12 @@ public class Metier
 			this.lstFormes.add(this.lstFormesSupprimer.remove(this.lstFormesSupprimer.size()-1));
 	}
 
+	public void unRemoveForme(Forme forme)
+	{
+		if (this.lstFormesSupprimer.size() > 0 && this.lstFormesSupprimer.contains(forme))
+			this.lstFormes.add(this.lstFormesSupprimer.remove(this.lstFormesSupprimer.indexOf(forme)));
+	}
+
 	/**
 	 * Permet de modifier la couleur sélectionné.
 	 * @param color : nouvelle couleur sélectionné.
