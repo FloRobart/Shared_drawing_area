@@ -16,8 +16,6 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import controleur.Controleur;
 import metier.Forme;
 
@@ -162,12 +160,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.currentShape == null) return;
         if (this.click == MouseEvent.BUTTON1)
         {
-            //if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-            //{
-            //    this.currentShape.setXFin(me.getX());
-            //    this.currentShape.setYFin(me.getY());
-            //}
-
             this.currentShape.setXOrig(this.currentShape.getXOrig(), me.getX());
             this.currentShape.setYOrig(this.currentShape.getYOrig(), me.getY());
         }
@@ -195,11 +187,11 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             if (this.currentShape != null)
             {
-                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT && this.click != -1)
                 {
                     String text = null;
                     if (this.currentShape.getYFin() - this.currentShape.getYDeb() > 3)
-                        text = JOptionPane.showInputDialog(this, "Texte : ");
+                        text = JOptionPane.showInputDialog(this, "Texte : ", "Exemple");
 
                     if (text == null)
                     {
@@ -218,7 +210,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             if (this.currentShape != null)
             {
-                // afficher une popup pour supprimer la forme et la modifier
+                // TODO : afficher une popup pour supprimer la forme et la modifier
                 this.currentShape = null;
             }
         }
