@@ -28,6 +28,11 @@ public class Client
         this.clientToServerSocket.removeForme(form);
     }
 
+    public void unRemoveForme(Forme form)
+    {
+        this.clientToServerSocket.unRemvoeForme(form);
+    }
+
     public Boolean Connect(String ip, int port, String name)
     {
 

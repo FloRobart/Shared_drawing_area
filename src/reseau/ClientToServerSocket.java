@@ -124,6 +124,19 @@ public class ClientToServerSocket extends Thread
         } 
     }
 
+    public void unRemvoeForme(Forme forme)
+    {
+        try {
+            oos.reset();
+            oos.writeObject("unRemoveDrawing");
+            oos.writeObject(forme.getId());
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+    }
+
     @Override
     public void run()
     {
@@ -167,6 +180,11 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("removeDrawing"))
                 {
                     this.ctrl.removeFormeNetwork((String)ois.readObject());
+                }
+
+                if (command.equals("unRemoveDrawing"))
+                {
+                    this.ctrl.unRemoveFormeNetwork((String)ois.readObject());
                 }
 
             }
