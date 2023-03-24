@@ -62,7 +62,16 @@ public class Controleur
 	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes.
 	 * @param forme : forme à ajouter.
 	 */
-	public void addForme(Forme forme) { this.metier.addForme(forme); }
+	public void addForme(Forme forme)
+    {
+        this.metier.addForme(forme);
+        if (this.client != null)
+            this.client.sendForme(forme);
+        
+        if (this.serverThread != null)
+            this.serverThread.broadcastForme(forme);
+
+    }
 
     /**
 	 * Permet de supprimer une forme.
