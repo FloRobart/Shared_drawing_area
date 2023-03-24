@@ -83,24 +83,29 @@ public class Forme implements java.io.Serializable
     public boolean isIn(int x, int y)
     {
         // TODO : fait avec copilot
-        if (type == TYPE_CERCLE)
+        if (type == TYPE_RECT) /* Rectangle */
+        {
+            return x >= xDeb && x <= xFin && y >= yDeb && y <= yFin;
+        }
+        else if (type == TYPE_CERCLE) /* Cercle */
         {
             int xM = (xDeb + xFin) / 2;
             int yM = (yDeb + yFin) / 2;
             int r  = (xFin - xDeb) / 2;
             return (x - xM) * (x - xM) + (y - yM) * (y - yM) <= r * r;
         }
-        else if (type == TYPE_LIGNE)
+        else if (type == TYPE_LIGNE) /* Ligne */
         {
             int xM = (xDeb + xFin) / 2;
             int yM = (yDeb + yFin) / 2;
             int r  = 5;
             return (x - xM) * (x - xM) + (y - yM) * (y - yM) <= r * r;
         }
-        else if (type == TYPE_RECT)
+        else if (type == TYPE_TEXT) /* Texte */
         {
             return x >= xDeb && x <= xFin && y >= yDeb && y <= yFin;
         }
+
         return false;
     }
 

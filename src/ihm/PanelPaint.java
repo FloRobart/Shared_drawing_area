@@ -145,6 +145,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                 if (f.isIn(me.getX(), me.getY()))
                 {
                     this.currentShape = f;
+                    System.out.println("currentShape : " + this.currentShape.getType());
                     break;
                 }
             }
