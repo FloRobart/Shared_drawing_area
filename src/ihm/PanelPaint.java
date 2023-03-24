@@ -30,6 +30,8 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public PanelPaint(Controleur ctrl, int[] taillePlateau)
     {
         this.ctrl  = ctrl;
+        this.setFocusable(true);
+        this.requestFocusInWindow();
         this.click = -1;
         this.currentShape = null;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -42,6 +44,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         /* Ajout des listeners */
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+
 
         this.addKeyListener(this);
     }
