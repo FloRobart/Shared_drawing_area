@@ -24,7 +24,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
 {
     private Controleur ctrl;
 
-    private int click;
+    private int buttonDragged;
     private Forme currentShape;
 
 
@@ -34,7 +34,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         this.setFocusable(true);
         this.requestFocusInWindow();
 
-        this.click = -1;
+        this.buttonDragged = 0;
         this.currentShape = null;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
@@ -100,55 +100,45 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    /**
+     * Permet de récuperer la forme sur laquelle on a cliqué
+     * @param x : coordonnée x du clique
+     * @param y : coordonnée y du clique
+     */
+    private void setCurrentShape(int x, int y)
+    {
+        for (Forme f : this.ctrl.getLstFormes())
+            if (f.isIn(x, y)) { this.currentShape = f; return; }
+
+        this.currentShape = null;
+    }
 
 
     @Override
     public void mousePressed(MouseEvent me)
     {
+        if (this.ctrl.getPeindre()) return;
+        
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            /* Peindre */
-            if (this.ctrl.getPeindre())
-            {
-                this.click = -1;
-                for (Forme f : this.ctrl.getLstFormes())
-                    if (f.isIn(me.getX(), me.getY()))
-                    {
-                        f.setRempli(!f.isRempli());
-                        f.setCouleur(this.ctrl.getSelectedColor());
-                        this.ctrl.ihmMajForme(f);
-                        return;
-                    }
-            }
+            this.buttonDragged = MouseEvent.BUTTON1;
+            Forme forme = null;
+
+            /* Texte */
+            if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+                forme = new Forme(me.getX(), me.getY(), "Exemple", this.ctrl.getSelectedColor());
             else /* Toutes les autres formes */
-            {
-                this.click = MouseEvent.BUTTON1;
-                Forme forme = null;
-
-                /* Texte */
-                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-                    forme = new Forme(me.getX(), me.getY(), "Exemple", this.ctrl.getSelectedColor());
-                else /* Toutes les autres formes */
-                    forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
+                forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
 
 
-                this.ctrl.addForme(forme);
-                this.currentShape = forme;
-                this.ctrl.finaliseForme(this.currentShape);
-            }
+            this.ctrl.addForme(forme);
+            this.currentShape = forme;
+            this.ctrl.finaliseForme(this.currentShape);
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
-            this.click = MouseEvent.BUTTON3;
-            for (Forme f : this.ctrl.getLstFormes())
-            {
-                if (f.isIn(me.getX(), me.getY()))
-                {
-                    this.currentShape = f;
-                    System.out.println("currentShape : " + this.currentShape.getType());
-                    break;
-                }
-            }
+            this.buttonDragged = MouseEvent.BUTTON3;
+            this.setCurrentShape(me.getX(), me.getY());
         }
 
         System.out.println("lsite des formes : " + this.ctrl.getLstFormes().size());
@@ -158,69 +148,80 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent me)
     {
-        if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.currentShape == null) return;
-        if (this.click == MouseEvent.BUTTON1)
+        if (this.ctrl.getPeindre()) return;
+
+        if (this.buttonDragged == MouseEvent.BUTTON1)
         {
             this.currentShape.setXOrig(this.currentShape.getXOrig(), me.getX());
             this.currentShape.setYOrig(this.currentShape.getYOrig(), me.getY());
         }
-        else if (this.click == MouseEvent.BUTTON3)
+        else if (this.buttonDragged == MouseEvent.BUTTON3)
         {
-            //TODO: ca parce que ca marche pas
-            this.currentShape.setXDeb(me.getX());
-            this.currentShape.setYDeb(me.getY());
-
-            this.currentShape.setXFin(this.currentShape.getXFin() + me.getX());
-            this.currentShape.setYFin(this.currentShape.getYFin() + me.getY());
-        }
-        if (this.currentShape != null)
-        {
-            this.ctrl.ihmMajForme(this.currentShape);
+            // TODO : faire en sorte qu'on puisse déplacer la forme
         }
 
+
+        this.ctrl.ihmMajForme(this.currentShape);
         this.repaint();
     }
 
     @Override
     public void mouseReleased(MouseEvent me)
     {
+        if (this.ctrl.getPeindre()) return;
+
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            if (this.currentShape != null)
+            if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
             {
-                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT && this.click != -1)
-                {
-                    String text = null;
-                    if (this.currentShape.getYFin() - this.currentShape.getYDeb() > 3)
-                        text = JOptionPane.showInputDialog(this, "Texte : ", "Exemple");
+                String text = null;
+                if (this.currentShape.getYFin() - this.currentShape.getYDeb() > 3)
+                    text = JOptionPane.showInputDialog(this, "Texte : ", "Exemple");
 
-                    if (text == null)
-                    {
-                        this.ctrl.getLstFormes().remove(this.currentShape);
-                        this.currentShape = null;
-                    }
-                    else
-                        this.currentShape.setText(text);
-                }
-
-                if (this.currentShape != null)
-                    this.currentShape.resetOrig();
+                if (text == null)
+                    this.ctrl.getLstFormes().remove(this.currentShape);
+                else
+                    this.currentShape.setText(text);
             }
-        }
-        else if (me.getButton() == MouseEvent.BUTTON3)
-        {
-            if (this.currentShape != null)
+            else if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
             {
-                // TODO : afficher une popup pour supprimer la forme et la modifier
-                this.currentShape = null;
+                this.currentShape.setCouleur(this.ctrl.getSelectedColor());
             }
+
+            if (this.currentShape != null)
+                this.currentShape.resetOrig();
         }
 
         if (this.currentShape != null)
             this.ctrl.ihmMajForme(this.currentShape);
 
+
         this.repaint();
     }
+
+    @Override
+    public void mouseClicked(MouseEvent me)
+    {
+        if (me.getButton() == MouseEvent.BUTTON1)
+        {
+            /* Peindre */
+            if (this.ctrl.getPeindre())
+            {
+                this.setCurrentShape(me.getX(), me.getY());
+                if (this.currentShape == null) return;
+
+                this.currentShape.setRempli(!this.currentShape.isRempli());
+                this.currentShape.setCouleur(this.ctrl.getSelectedColor());
+                this.ctrl.ihmMajForme(this.currentShape);
+                this.repaint();
+            }
+        }
+        else if (me.getButton() == MouseEvent.BUTTON3)
+        {
+            // TODO : afficher une popup pour supprimer la forme et la modifier
+        }
+    }
+
 
     @Override
     public void keyPressed(KeyEvent ke)
@@ -250,6 +251,4 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseEntered(MouseEvent me) {}
     @Override
     public void mouseExited(MouseEvent me) {}
-    @Override
-    public void mouseClicked(MouseEvent me) {}
 }
