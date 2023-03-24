@@ -210,6 +210,12 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         System.out.println("key released : " + ke.getKeyCode());
     }
 
+    @Override
+    public void keyTyped(KeyEvent ke)
+    {
+        System.out.println("key typed : " + ke.getKeyCode());
+    }
+
 
     @Override
     public void mouseMoved(MouseEvent me) {}
@@ -219,7 +225,4 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseExited(MouseEvent me) {}
     @Override
     public void mouseClicked(MouseEvent me) {}
-
-    @Override
-    public void keyTyped(KeyEvent ke) {}
 }
