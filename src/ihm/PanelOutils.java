@@ -168,40 +168,26 @@ public class PanelOutils extends JPanel implements ActionListener
         {
             this.btnLigne.setBorder(this.selectedBorder);
             this.ctrl.setSelectedTypeForme(Forme.TYPE_LIGNE);
-
-            return;
         }
-        
-        if (ae.getSource() == this.btnCercle)
+        else if (ae.getSource() == this.btnCercle)
         {
             this.btnCercle.setBorder(this.selectedBorder);
             this.ctrl.setSelectedTypeForme(Forme.TYPE_CERCLE);
-
-            return;
         }
-        
-        if (ae.getSource() == this.btnCarre)
+        else if (ae.getSource() == this.btnCarre)
         {
             this.btnCarre.setBorder(this.selectedBorder);
             this.ctrl.setSelectedTypeForme(Forme.TYPE_RECT);
-
-            return;
         }
-        
-        if (ae.getSource() == this.btnTexte)
+        else if (ae.getSource() == this.btnTexte)
         {
             this.btnTexte.setBorder(this.selectedBorder);
             this.ctrl.setSelectedTypeForme(Forme.TYPE_TEXT);
-
-            return;
         }
-        
-        if (ae.getSource() == this.btnPeindre)
+        else if (ae.getSource() == this.btnPeindre)
         {
             this.btnPeindre.setBorder(this.btnPeindre.getBorder() == this.selectedBorder ? this.defaultBorder : this.selectedBorder);
             this.ctrl.setPeindre(!this.ctrl.getPeindre());
-
-            return;
         }
     }
 

@@ -104,14 +104,15 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
+            /* Texte */
             if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
             {
                 this.ctrl.setSelectedTypeForme(Forme.TYPE_TEXT);
-                
 
                 return;
             }
 
+            /* Peindre */
             if (this.ctrl.getPeindre())
             {
                 this.click = -1;
@@ -123,7 +124,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                         return;
                     }
             }
-            else
+            else /* Toutes les autres formes */
             {
                 this.click = MouseEvent.BUTTON1;
                 Forme forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
