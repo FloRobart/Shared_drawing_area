@@ -43,9 +43,19 @@ public class ServerToClientSocket extends Thread
             return;
         }
         try {
-            oos.reset();
             oos.writeObject("newDrawing");
             oos.writeObject(form);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void majForme(Forme forme)
+    {
+        try {
+            oos.writeObject("majForme");
+            oos.writeObject(forme);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,7 +90,6 @@ public class ServerToClientSocket extends Thread
 
                     List<Forme> forms = this.serverThread.getCtrl().getLstFormes();
                     
-                    oos.reset();
                     oos.writeObject("drawings");
                     oos.writeObject(forms);
                     oos.flush();

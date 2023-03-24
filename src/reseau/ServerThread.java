@@ -77,4 +77,12 @@ public class ServerThread extends Thread
         }
     }
 
+    public void broadcastMajForme(Forme forme)
+    {
+        for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
+        {
+            serverToClientSocket.majForme(forme);
+        }
+    }
+
 }

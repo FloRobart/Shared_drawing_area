@@ -88,8 +88,18 @@ public class ClientToServerSocket extends Thread
     public void sendForme(Forme forme)
     {
         try {
-            oos.reset();
             oos.writeObject("newDrawing");
+            oos.writeObject(forme);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void majForme(Forme forme)
+    {
+        try {
+            oos.writeObject("majForme");
             oos.writeObject(forme);
 
         } catch (IOException e) {
