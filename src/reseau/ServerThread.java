@@ -66,6 +66,14 @@ public class ServerThread extends Thread
         }
     }
 
+    public void broadcastRemoveForme(Forme forme)
+    {
+        for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
+        {
+            serverToClientSocket.removeForme(forme);
+        }
+    }
+
     public Controleur getCtrl()
     {
         return this.ctrl;

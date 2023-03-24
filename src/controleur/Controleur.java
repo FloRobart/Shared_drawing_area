@@ -81,7 +81,15 @@ public class Controleur
 	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes supprimé et la supprime de la liste des formes.
 	 * @param forme : forme à supprimer.
 	 */
-	public void removeForme(Forme forme) { this.metier.removeForme(forme); }
+	public void removeForme(Forme forme)
+    {
+        this.metier.removeForme(forme);
+        if (this.client != null)
+            this.client.removeFrome(forme);
+        
+        if (this.serverThread != null)
+            this.serverThread.broadcastRemoveForme(forme);
+    }
 
     /**
 	 * Permet de rétablir une forme supprimé.
@@ -330,5 +338,21 @@ public class Controleur
         {
             this.serverThread.broadcastMajForme(forme);
         }
+    }
+
+
+
+
+    public void removeFormeNetwork(String id)
+    {
+        for (Forme f : this.getLstFormes())
+        {
+            if (f.getId().equals(id))
+            {
+                this.removeForme(f);
+                break;
+            }
+        }
+        this.majIhm();
     }
 }

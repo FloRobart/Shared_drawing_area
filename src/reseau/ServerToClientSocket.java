@@ -61,6 +61,19 @@ public class ServerToClientSocket extends Thread
         }
     }
 
+    public void removeForme(Forme forme)
+    {
+        try {
+            oos.reset();
+            oos.writeObject("removeDrawing");
+            oos.writeObject(forme.getId());
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+    }
+
 
     @Override
     public void run()
@@ -115,6 +128,12 @@ public class ServerToClientSocket extends Thread
 
                     // Envoyer la forme à tous les clients
                     this.serverThread.broadcastMajForme(form);
+                }
+
+                if (command.equals("removeDrawing"))
+                {
+                    this.serverThread.getCtrl().removeFormeNetwork((String)ois.readObject());
+
                 }
 
             }
