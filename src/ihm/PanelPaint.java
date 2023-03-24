@@ -32,7 +32,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         this.ctrl  = ctrl;
         this.click = -1;
         this.currentShape = null;
-        this.setBorder(BorderFactory.createLineBorder(this.ctrl.getTheme().get("titlesBackground"), 2));
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
 		this.setSize(taillePlateau[0], taillePlateau[1]);
         this.setPreferredSize(new Dimension(taillePlateau[0], taillePlateau[1]));
