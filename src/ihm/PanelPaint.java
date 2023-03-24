@@ -121,6 +121,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
                     {
                         f.setRempli(!f.isRempli());
                         f.setCouleur(this.ctrl.getSelectedColor());
+                        this.ctrl.ihmMajForme(f);
                         return;
                     }
             }

@@ -28,11 +28,12 @@ public class Forme implements java.io.Serializable
     private int xOrig;
     private int yOrig;
 
+    private int id;
 
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
     {
         
-        
+        this.id = id_compteur++;
         this.xDeb = Math.min(xDeb, xFin);
         this.yDeb = Math.min(yDeb, yFin);
         this.xFin = Math.max(xDeb, xFin);
@@ -61,6 +62,7 @@ public class Forme implements java.io.Serializable
     public boolean isRempli  () { return rempli; }
     public Color   getCouleur() { return couleur; }
     public String  getText   () { return text; }
+    public int     getId     () { return id; }
 
     public boolean isIn(int x, int y)
     {

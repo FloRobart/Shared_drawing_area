@@ -287,4 +287,48 @@ public class Controleur
     {
         new Controleur();
     }
+
+
+
+
+    public void majForme(Forme forme)
+    {
+        for (Forme f : this.getLstFormes())
+        {
+            if (f.getId() == forme.getId())
+            {
+                for (java.lang.reflect.Field field : f.getClass().getDeclaredFields())
+                {
+                    // if the field is not final or static
+                    if ((field.getModifiers() & 0x00000010) == 0 && (field.getModifiers() & 0x00000008) == 0)
+                    {
+                        field.setAccessible(true);
+                        try {
+                            field.set(f, field.get(forme));
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        this.majIhm();
+    }
+
+
+
+
+    public void ihmMajForme(Forme forme)
+    {
+        if (this.client != null)
+        {
+            this.client.majForme(forme);
+        }
+        if (this.serverThread != null)
+        {
+            this.serverThread.broadcastMajForme(forme);
+        }
+    }
 }

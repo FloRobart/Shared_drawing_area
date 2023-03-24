@@ -144,6 +144,12 @@ public class ClientToServerSocket extends Thread
                     this.ctrl.majIhm();
                 }
 
+                if (command.equals("majDrawing"))
+                {
+                    Forme forme = (Forme)ois.readObject();
+                    this.ctrl.majForme(forme);
+                }
+
             }
             catch (Exception e)
             {
