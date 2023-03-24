@@ -4,6 +4,7 @@ import static java.lang.Math.min;
 import static java.lang.Math.max;
 import static metier.Metier.TAILLE_PLATEAU;
 import java.awt.Color;
+import java.util.UUID;
 
 
 public class Forme implements java.io.Serializable
@@ -28,15 +29,16 @@ public class Forme implements java.io.Serializable
 
     private String id;
 
+
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
     {
         
         // make if a guid
-        this.id = java.util.UUID.randomUUID().toString();
-        this.xDeb = Math.min(xDeb, xFin);
-        this.yDeb = Math.min(yDeb, yFin);
-        this.xFin = Math.max(xDeb, xFin);
-        this.yFin = Math.max(yDeb, yFin);
+        this.id = UUID.randomUUID().toString();
+        this.xDeb = min(xDeb, xFin);
+        this.yDeb = min(yDeb, yFin);
+        this.xFin = max(xDeb, xFin);
+        this.yFin = max(yDeb, yFin);
         this.type = type;
         this.rempli = rempli;
         this.couleur = couleur;
@@ -66,16 +68,18 @@ public class Forme implements java.io.Serializable
 
     public int     getXDeb   () { return xDeb; }
     public int     getYDeb   () { return yDeb; }
-    public int     getXOrig  () { return xOrig;}
-    public int     getYOrig  () { return yOrig;}
     public int     getXFin   () { return xFin; }
     public int     getYFin   () { return yFin; }
     public int     getType   () { return type; }
     public boolean isRempli  () { return rempli; }
     public Color   getCouleur() { return couleur; }
     public String  getText   () { return text; }
-    public String  getId     () { return id; }
 
+    public int     getXOrig  () { return xOrig;}
+    public int     getYOrig  () { return yOrig;}
+
+    public String  getId     () { return id; }
+    
     public boolean isIn(int x, int y)
     {
         // TODO : fait avec copilot
@@ -113,12 +117,12 @@ public class Forme implements java.io.Serializable
         this.text = text;
     }
 
-    public void setX(int x1, int x2) {
+    public void setXOrig(int x1, int x2) {
         this.xDeb = this.type == TYPE_LIGNE ? x1 : min(x1, x2);
         this.xFin = this.type == TYPE_LIGNE ? x2 : max(x1, x2);
     }
 
-    public void setY(int y1, int y2) {
+    public void setYOrig(int y1, int y2) {
         this.yDeb = this.type == TYPE_LIGNE ? y1 : min(y1, y2);
         this.yFin = this.type == TYPE_LIGNE ? y2 : max(y1, y2);
     }

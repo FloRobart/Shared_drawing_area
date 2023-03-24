@@ -3,6 +3,7 @@ package ihm;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -94,6 +95,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             /* Texte */
             if (forme.getType() == Forme.TYPE_TEXT)
             {
+                g2.setFont(new Font("Arial", Font.PLAIN, forme.getYFin()-forme.getYDeb()));
                 g2.drawString(forme.getText(), forme.getXDeb(), forme.getYDeb());
                 continue;
             }
@@ -127,20 +129,14 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
 
                 /* Texte */
                 if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-                {
-                    String text = JOptionPane.showInputDialog("Entrez le texte : ");
-                    if (text != null && text != "")
-                        forme = new Forme(me.getX(), me.getY(), text, this.ctrl.getSelectedColor());
-                }
+                    forme = new Forme(me.getX(), me.getY(), "Exemple", this.ctrl.getSelectedColor());
                 else /* Toutes les autres formes */
                     forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
 
-                if (forme != null)
-                {
-                    this.ctrl.addForme(forme);
-                    this.currentShape = forme;
-                    this.ctrl.finaliseForme(this.currentShape);
-                }
+
+                this.ctrl.addForme(forme);
+                this.currentShape = forme;
+                this.ctrl.finaliseForme(this.currentShape);
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
@@ -166,8 +162,14 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         if (this.click == -1 || this.ctrl.getLstFormes().size() == 0 || this.currentShape == null) return;
         if (this.click == MouseEvent.BUTTON1)
         {
-            this.currentShape.setX(this.currentShape.getXOrig(), me.getX());
-            this.currentShape.setY(this.currentShape.getYOrig(), me.getY());
+            //if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+            //{
+            //    this.currentShape.setXFin(me.getX());
+            //    this.currentShape.setYFin(me.getY());
+            //}
+
+            this.currentShape.setXOrig(this.currentShape.getXOrig(), me.getX());
+            this.currentShape.setYOrig(this.currentShape.getYOrig(), me.getY());
         }
         else if (this.click == MouseEvent.BUTTON3)
         {
@@ -197,7 +199,23 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             if (this.currentShape != null)
             {
-                this.currentShape.resetOrig();
+                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+                {
+                    String text = null;
+                    if (this.currentShape.getYFin() - this.currentShape.getYDeb() > 3)
+                        text = JOptionPane.showInputDialog(this, "Texte : ");
+
+                    if (text == null)
+                    {
+                        this.ctrl.getLstFormes().remove(this.currentShape);
+                        this.currentShape = null;
+                    }
+                    else
+                        this.currentShape.setText(text);
+                }
+
+                if (this.currentShape != null)
+                    this.currentShape.resetOrig();
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
