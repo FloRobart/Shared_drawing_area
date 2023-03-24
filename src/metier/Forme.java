@@ -51,6 +51,19 @@ public class Forme implements java.io.Serializable
         this(xDeb, yDeb, xDeb, yDeb, type, rempli, couleur);
     }
 
+    /**
+     * Constructeur pour les textes
+     * @param xDeb : x du coin haut gauche
+     * @param yDeb : y du coin haut gauche
+     * @param text : texte
+     * @param couleur : couleur du texte
+     */
+    public Forme(int xDeb, int yDeb, String text, Color couleur)
+    {
+        this(xDeb, yDeb, xDeb, yDeb, Forme.TYPE_TEXT, false, couleur);
+        this.text = text;
+    }
+
     public int     getXDeb   () { return xDeb; }
     public int     getYDeb   () { return yDeb; }
     public int     getXOrig  () { return xOrig;}

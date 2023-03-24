@@ -34,10 +34,6 @@ public class FramePrinciple extends JFrame
         this.add(this.panelPrincipale);
 
 
-        /* Activation des composants */
-        
-
-
         /* Affichage de la fenêtre */
         this.appliquerTheme();
         this.setVisible(true);

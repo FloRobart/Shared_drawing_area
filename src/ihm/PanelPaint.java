@@ -13,7 +13,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import controleur.Controleur;
 import metier.Forme;
@@ -32,6 +34,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         this.ctrl  = ctrl;
         this.setFocusable(true);
         this.requestFocusInWindow();
+
         this.click = -1;
         this.currentShape = null;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -44,9 +47,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         /* Ajout des listeners */
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-
-
-        this.addKeyListener(this);
     }
 
 
@@ -94,7 +94,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             /* Texte */
             if (forme.getType() == Forme.TYPE_TEXT)
             {
-                //g2.drawString(forme.getText(), forme.getXDeb(), forme.getYDeb());
+                g2.drawString(forme.getText(), forme.getXDeb(), forme.getYDeb());
                 continue;
             }
         }
@@ -107,14 +107,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            /* Texte */
-            if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-            {
-                this.ctrl.setSelectedTypeForme(Forme.TYPE_TEXT);
-
-                return;
-            }
-
             /* Peindre */
             if (this.ctrl.getPeindre())
             {
@@ -131,11 +123,24 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             else /* Toutes les autres formes */
             {
                 this.click = MouseEvent.BUTTON1;
-                Forme forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
-                this.ctrl.addForme(forme);
-                this.currentShape = forme;
-                this.ctrl.finaliseForme(this.currentShape);
+                Forme forme = null;
 
+                /* Texte */
+                if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+                {
+                    String text = JOptionPane.showInputDialog("Entrez le texte : ");
+                    if (text != null && text != "")
+                        forme = new Forme(me.getX(), me.getY(), text, this.ctrl.getSelectedColor());
+                }
+                else /* Toutes les autres formes */
+                    forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
+
+                if (forme != null)
+                {
+                    this.ctrl.addForme(forme);
+                    this.currentShape = forme;
+                    this.ctrl.finaliseForme(this.currentShape);
+                }
             }
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
@@ -210,19 +215,22 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void keyPressed(KeyEvent ke)
     {
-        System.out.println("key pressed : " + ke.getKeyCode());
+        System.out.print("key pressed : ");
+        System.out.println(ke.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent ke)
     {
-        System.out.println("key released : " + ke.getKeyCode());
+        System.out.print("key Released : ");
+        System.out.println(ke.getKeyCode());
     }
 
     @Override
     public void keyTyped(KeyEvent ke)
     {
-        System.out.println("key typed : " + ke.getKeyCode());
+        System.out.print("key Typed : ");
+        System.out.println(ke.getKeyCode());
     }
 
 
