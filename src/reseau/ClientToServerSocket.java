@@ -1,6 +1,5 @@
 package reseau;
 
-import java.awt.Container;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +8,7 @@ import java.util.List;
 
 import controleur.Controleur;
 import metier.Forme;
-
+@SuppressWarnings("unchecked") 
 public class ClientToServerSocket extends Thread
 {
     private ObjectInputStream ois;
@@ -92,6 +91,7 @@ public class ClientToServerSocket extends Thread
             oos.reset();
             oos.writeObject("newDrawing");
             oos.writeObject(forme);
+            oos.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,6 +104,7 @@ public class ClientToServerSocket extends Thread
             oos.reset();
             oos.writeObject("majDrawing");
             oos.writeObject(forme);
+            oos.flush();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -52,8 +52,9 @@ public class ServerToClientSocket extends Thread
     {
         try {
             oos.reset();
-            oos.writeObject("majForme");
+            oos.writeObject("majDrawing");
             oos.writeObject(forme);
+            oos.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,13 +108,12 @@ public class ServerToClientSocket extends Thread
                     this.serverThread.getCtrl().majIhm();
                 }
 
-                if (command.equals("majForme"))
+                if (command.equals("majDrawing"))
                 {
                     Forme form = (Forme)ois.readObject();
                     this.serverThread.getCtrl().majForme(form);
 
                     // Envoyer la forme à tous les clients
-
                     this.serverThread.broadcastMajForme(form);
                 }
 
