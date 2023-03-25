@@ -95,27 +95,35 @@ public class Forme implements java.io.Serializable
         }
         else if (type == TYPE_CERCLE) /* Cercle */
         { // fonctionne pas
-            int width = xFin - xDeb;
-            int height = yFin - yDeb;
-            Point s1 = new Point(xDeb + width/2, yDeb);
-            Point s2 = new Point(xDeb + width, yDeb + height/2);
-            Point s3 = new Point(xDeb + width/2, yDeb + height);
-            Point s4 = new Point(xDeb, yDeb + height/2);
+            if (rempli)
+            {
+                double a = (xDeb + xFin) / 2;
+                double b = (yDeb + yFin) / 2;
+                double X = Math.abs(xFin - xDeb) / 2;
+                double Y = Math.abs(yFin - yDeb) / 2;
+                double resExterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
 
-            double grandAxe = max(width, height);
-            double petitAxe = min(width, height);
+                return resExterieur <= 1;
+            }
+            else
+            {
+                double a = ((xDeb-(stroke/2)) + (xFin+(stroke/2))) / 2;
+                double b = ((yDeb-(stroke/2)) + (yFin+(stroke/2))) / 2;
+                double X = Math.abs((xFin+(stroke/2)) - (xDeb-(stroke/2))) / 2;
+                double Y = Math.abs((yFin+(stroke/2)) - (yDeb-(stroke/2))) / 2;
+                double resExterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
 
-            double h = s1.getX();
-            double k = s1.getY();
+                a = ((xDeb+(stroke/2)) + (xFin-(stroke/2))) / 2;
+                b = ((yDeb+(stroke/2)) + (yFin-(stroke/2))) / 2;
+                X = Math.abs((xFin-(stroke/2)) - (xDeb+(stroke/2))) / 2;
+                Y = Math.abs((yFin-(stroke/2)) - (yDeb+(stroke/2))) / 2;
+                double resInterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
 
-            double a = grandAxe/2;
-            double b = petitAxe/2;
+                System.out.println("resExterieur : " + resExterieur);
+                System.out.println("resInterieur : " + resInterieur);
 
-
-
-
-            double f1 = -1;
-            double f2 = -1;
+                return resExterieur <= 1 && resInterieur >= 1;
+            }
         }
         else if (type == TYPE_LIGNE) /* Ligne */
         {
