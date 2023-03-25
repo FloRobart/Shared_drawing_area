@@ -95,35 +95,28 @@ public class Forme implements java.io.Serializable
         }
         else if (type == TYPE_CERCLE) /* Cercle */
         { // fonctionne pas
-            if (rempli)
+            if (!rempli)
             {
-                double a = (xDeb + xFin) / 2;
-                double b = (yDeb + yFin) / 2;
-                double X = Math.abs(xFin - xDeb) / 2;
-                double Y = Math.abs(yFin - yDeb) / 2;
-                double resExterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
+                double dif = (stroke/2);
 
-                return resExterieur <= 1;
+                /* Extérieur */
+                double xDebExt = xDeb-dif;
+                double yDebExt = yDeb-dif;
+                double xFinExt = xFin+dif;
+                double yFinExt = yFin+dif;
+
+                /* Intérieur */
+                double xDebInt = xDeb+dif;
+                double yDebInt = yDeb+dif;
+                double xFinInt = xFin-dif;
+                double yFinInt = yFin-dif;
+
+
+                return (Math.pow(((posx-((xDebExt+xFinExt)/2))/(Math.abs(xFinExt-xDebExt)/2)), 2) + Math.pow(((posy-((yDebExt+yFinExt)/2))/(Math.abs(yFinExt-yDebExt)/2)), 2)) <= 1 &&
+                       (Math.pow(((posx-((xDebInt+xFinInt)/2))/(Math.abs(xFinInt-xDebInt)/2)), 2) + Math.pow(((posy-((yDebInt+yFinInt)/2))/(Math.abs(yFinInt-yDebInt)/2)), 2)) >= 1;
             }
-            else
-            {
-                double a = ((xDeb-(stroke/2)) + (xFin+(stroke/2))) / 2;
-                double b = ((yDeb-(stroke/2)) + (yFin+(stroke/2))) / 2;
-                double X = Math.abs((xFin+(stroke/2)) - (xDeb-(stroke/2))) / 2;
-                double Y = Math.abs((yFin+(stroke/2)) - (yDeb-(stroke/2))) / 2;
-                double resExterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
 
-                a = ((xDeb+(stroke/2)) + (xFin-(stroke/2))) / 2;
-                b = ((yDeb+(stroke/2)) + (yFin-(stroke/2))) / 2;
-                X = Math.abs((xFin-(stroke/2)) - (xDeb+(stroke/2))) / 2;
-                Y = Math.abs((yFin-(stroke/2)) - (yDeb+(stroke/2))) / 2;
-                double resInterieur = Math.pow(((posx - a) / X), 2) + Math.pow(((posy - b) / Y), 2);
-
-                System.out.println("resExterieur : " + resExterieur);
-                System.out.println("resInterieur : " + resInterieur);
-
-                return resExterieur <= 1 && resInterieur >= 1;
-            }
+            return (Math.pow(((posx-(((double)xDeb+(double)xFin)/2))/(Math.abs((double)xFin-(double)xDeb)/2)), 2) + Math.pow(((posy-(((double)yDeb+(double)yFin)/2))/(Math.abs((double)yFin-(double)yDeb)/2)), 2)) <= 1;
         }
         else if (type == TYPE_LIGNE) /* Ligne */
         {
