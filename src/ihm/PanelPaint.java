@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -20,7 +18,7 @@ import controleur.Controleur;
 import metier.Forme;
 
 
-public class PanelPaint extends JPanel implements MouseListener, MouseMotionListener, KeyListener
+public class PanelPaint extends JPanel implements MouseListener, MouseMotionListener
 {
     private Controleur ctrl;
 
@@ -59,7 +57,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         for (Forme forme : formes)
         {
             g2.setColor(forme.getCouleur());
-            g2.setStroke(new BasicStroke(5));
+            g2.setStroke(new BasicStroke(forme.getStroke()));
 
             /* Cercle */
             if (forme.getType() == Forme.TYPE_CERCLE)
@@ -128,7 +126,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
             if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
                 forme = new Forme(me.getX(), me.getY(), "Exemple", this.ctrl.getSelectedColor());
             else /* Toutes les autres formes */
-                forme = new Forme(me.getX(), me.getY(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
+                forme = new Forme(me.getX(), me.getY(), this.ctrl.getStroke(), this.ctrl.getSelectedTypeForme(), this.ctrl.getRempli(), this.ctrl.getSelectedColor());
 
 
             this.ctrl.addForme(forme);
@@ -168,34 +166,33 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent me)
     {
-        if (this.ctrl.getPeindre()) return;
+        if (me.getButton() != MouseEvent.BUTTON1 || this.ctrl.getPeindre()) return;
 
-        if (me.getButton() == MouseEvent.BUTTON1)
+        if (this.currentShape.getYFin() - this.currentShape.getYDeb() <= 3 && this.currentShape.getXFin() - this.currentShape.getXDeb() <= 3)
         {
-            if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-            {
-                String text = null;
-                if (this.currentShape.getYFin() - this.currentShape.getYDeb() > 3)
-                    text = JOptionPane.showInputDialog(this, "Texte : ", "Exemple");
-
-                if (text == null)
-                    this.ctrl.getLstFormes().remove(this.currentShape);
-                else
-                    this.currentShape.setText(text);
-            }
-            else if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
-            {
-                this.currentShape.setCouleur(this.ctrl.getSelectedColor());
-            }
-
-            if (this.currentShape != null)
-                this.currentShape.resetOrig();
+            this.ctrl.getLstFormes().remove(this.currentShape);
+            this.repaint();
+            return;
         }
 
-        if (this.currentShape != null)
-            this.ctrl.ihmMajForme(this.currentShape);
+        if (this.ctrl.getSelectedTypeForme() == Forme.TYPE_TEXT)
+        {
+            String text = null;
+            if (this.currentShape.getYFin() - this.currentShape.getYDeb() >= 3)
+                text = JOptionPane.showInputDialog(this.getParent().getParent().getParent(), "Texte : ", "Exemple");
 
+            if (text == null)
+            {
+                this.ctrl.getLstFormes().remove(this.currentShape);
+                this.repaint();
+                return;
+            }
+            else
+                this.currentShape.setText(text);
+        }
 
+        this.currentShape.resetOrig();
+        this.ctrl.ihmMajForme(this.currentShape);
         this.repaint();
     }
 
@@ -204,7 +201,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     {
         if (me.getButton() == MouseEvent.BUTTON1)
         {
-            /* Peindre */
+            /* Gestion du pot de peinture */
             if (this.ctrl.getPeindre())
             {
                 this.setCurrentShape(me.getX(), me.getY());
@@ -220,28 +217,6 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         {
             // TODO : afficher une popup pour supprimer la forme et la modifier
         }
-    }
-
-
-    @Override
-    public void keyPressed(KeyEvent ke)
-    {
-        System.out.print("key pressed : ");
-        System.out.println(ke.getKeyCode());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke)
-    {
-        System.out.print("key Released : ");
-        System.out.println(ke.getKeyCode());
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke)
-    {
-        System.out.print("key Typed : ");
-        System.out.println(ke.getKeyCode());
     }
 
 

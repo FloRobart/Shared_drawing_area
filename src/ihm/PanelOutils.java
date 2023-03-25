@@ -13,12 +13,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import controleur.Controleur;
 import metier.Forme;
 
 
-public class PanelOutils extends JPanel implements ActionListener
+public class PanelOutils extends JPanel implements ActionListener, ChangeListener
 {           
     private static final int TAILLE_BOUTONS = 50;
 
@@ -31,6 +33,7 @@ public class PanelOutils extends JPanel implements ActionListener
     private JButton btnRempli;
     private JButton btnCouleur;
     private JButton btnPeindre;
+    private JSlider slider;
 
     private Border defaultBorder;
     private Border selectedBorder;
@@ -50,6 +53,7 @@ public class PanelOutils extends JPanel implements ActionListener
         this.btnRempli  = new JButton("");
         this.btnCouleur = new JButton("");
         this.btnPeindre = new JButton("");
+        this.slider     = new JSlider(JSlider.HORIZONTAL, 1, 50, this.ctrl.getStroke());
 
         this.defaultBorder  = this.btnLigne.getBorder();
         this.selectedBorder = BorderFactory.createBevelBorder(1, this.ctrl.getTheme().get("enableColor"), this.ctrl.getTheme().get("enableColor"));
@@ -103,6 +107,8 @@ public class PanelOutils extends JPanel implements ActionListener
                 .addComponent(btnCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(btnPeindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(slider, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(211, Short.MAX_VALUE))
         );
 
@@ -118,7 +124,8 @@ public class PanelOutils extends JPanel implements ActionListener
                     .addComponent(btnTexte, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPeindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRempli, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -133,6 +140,7 @@ public class PanelOutils extends JPanel implements ActionListener
         this.btnRempli .addActionListener(this);
         this.btnCouleur.addActionListener(this);
         this.btnPeindre.addActionListener(this);
+        this.slider    .addChangeListener(this);
     }
 
 
@@ -193,6 +201,11 @@ public class PanelOutils extends JPanel implements ActionListener
         }
     }
 
+    @Override
+    public void stateChanged(ChangeEvent ce)
+    {
+        this.ctrl.setStroke(((JSlider)(ce.getSource())).getValue());
+    }
 
     /**
      * Permet de dessiner une ligne

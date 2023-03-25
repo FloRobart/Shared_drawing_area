@@ -157,6 +157,17 @@ public class Controleur
 	public boolean getPeindre() { return this.metier.getPeindre(); }
 
     /**
+     * Permet de définir l'épaisseur des lignes ou des contours des formes qui vont être dessinées
+     */
+    public void setStroke(int stroke) { this.metier.setStroke(stroke); }
+
+    /**
+     * Permet de récupérer l'épaisseur des lignes ou des contours des formes qui vont être dessinées
+     * @return Epaisseur des lignes ou des contours des formes qui vont être dessinées
+     */
+    public int getStroke() { return this.metier.getStroke(); }
+
+    /**
      * Permet de mettre à jour l'IHM
      */
     public void majIhm() { this.ihm.majIhm(); }

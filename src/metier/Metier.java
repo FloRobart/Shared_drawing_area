@@ -36,6 +36,7 @@ public class Metier
 	private int         selectedForme;
 	private boolean     rempli;
 	private boolean     peindre;
+	private int         stroke;
 
 
     /* Thèmes */
@@ -66,6 +67,7 @@ public class Metier
 		this.selectedForme = Forme.TYPE_LIGNE;
 		this.rempli        = false;
 		this.peindre       = false;
+		this.stroke        = 5;
     }
 
 	/*====================*/
@@ -187,6 +189,17 @@ public class Metier
 	 * @return le remplissage.
 	 */
 	public boolean getPeindre() { return this.peindre; }
+
+	/**
+     * Permet de définir l'épaisseur des lignes ou des contours des formes qui vont être dessinées
+     */
+    public void setStroke(int stroke) { this.stroke = stroke; }
+
+	/**
+     * Permet de récupérer l'épaisseur des lignes ou des contours des formes qui vont être dessinées
+     * @return Epaisseur des lignes ou des contours des formes qui vont être dessinées
+     */
+    public int getStroke() { return this.stroke; }
 
 
 

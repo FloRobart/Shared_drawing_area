@@ -4,6 +4,7 @@ import static java.lang.Math.min;
 import static java.lang.Math.max;
 import static metier.Metier.TAILLE_PLATEAU;
 import java.awt.Color;
+import java.awt.Point;
 import java.util.UUID;
 
 
@@ -19,6 +20,7 @@ public class Forme implements java.io.Serializable
     private int yDeb;
     private int xFin;
     private int yFin;
+    private int stroke;
     private int type;
     private boolean rempli;
     private Color couleur;
@@ -30,7 +32,7 @@ public class Forme implements java.io.Serializable
     private String id;
 
 
-    public Forme(int xDeb, int yDeb, int xFin, int yFin, int type, boolean rempli, Color couleur)
+    public Forme(int xDeb, int yDeb, int xFin, int yFin, int stroke, int type, boolean rempli, Color couleur)
     {
         
         // make if a guid
@@ -39,6 +41,7 @@ public class Forme implements java.io.Serializable
         this.yDeb = min(yDeb, yFin);
         this.xFin = max(xDeb, xFin);
         this.yFin = max(yDeb, yFin);
+        this.stroke = stroke;
         this.type = type;
         this.rempli = rempli;
         this.couleur = couleur;
@@ -48,9 +51,9 @@ public class Forme implements java.io.Serializable
         this.yOrig = yDeb;
     }
 
-    public Forme(int xDeb, int yDeb, int type, boolean rempli, Color couleur)
+    public Forme(int xDeb, int yDeb, int stroke, int type, boolean rempli, Color couleur)
     {
-        this(xDeb, yDeb, xDeb, yDeb, type, rempli, couleur);
+        this(xDeb, yDeb, xDeb, yDeb, stroke, type, rempli, couleur);
     }
 
     /**
@@ -62,7 +65,7 @@ public class Forme implements java.io.Serializable
      */
     public Forme(int xDeb, int yDeb, String text, Color couleur)
     {
-        this(xDeb, yDeb, xDeb, yDeb, Forme.TYPE_TEXT, false, couleur);
+        this(xDeb, yDeb, xDeb, yDeb, 0, Forme.TYPE_TEXT, false, couleur);
         this.text = text;
     }
 
@@ -70,6 +73,7 @@ public class Forme implements java.io.Serializable
     public int     getYDeb   () { return yDeb; }
     public int     getXFin   () { return xFin; }
     public int     getYFin   () { return yFin; }
+    public int     getStroke () { return stroke; }
     public int     getType   () { return type; }
     public boolean isRempli  () { return rempli; }
     public Color   getCouleur() { return couleur; }
@@ -80,30 +84,58 @@ public class Forme implements java.io.Serializable
 
     public String  getId     () { return id; }
     
-    public boolean isIn(int x, int y)
+    public boolean isIn(int posx, int posy)
     {
-        // TODO : fait avec copilot
         if (type == TYPE_RECT) /* Rectangle */
-        {
-            return x >= xDeb && x <= xFin && y >= yDeb && y <= yFin;
+        { // fonctionne
+            if (rempli)
+                return posx >= xDeb && posx <= xFin && posy >= yDeb && posy <= yFin;
+            else
+                return posx >= xDeb-(stroke/2) && posx <= xFin+(stroke/2) && posy >= yDeb-(stroke/2) && posy <= yFin+(stroke/2) && !(posx >= xDeb+(stroke/2) && posx <= xFin-(stroke/2) && posy >= yDeb+(stroke/2) && posy <= yFin-(stroke/2));
         }
         else if (type == TYPE_CERCLE) /* Cercle */
-        {
-            int xM = (xDeb + xFin) / 2;
-            int yM = (yDeb + yFin) / 2;
-            int r  = (xFin - xDeb) / 2;
-            return (x - xM) * (x - xM) + (y - yM) * (y - yM) <= r * r;
+        { // fonctionne pas
+            int width = xFin - xDeb;
+            int height = yFin - yDeb;
+            Point s1 = new Point(xDeb + width/2, yDeb);
+            Point s2 = new Point(xDeb + width, yDeb + height/2);
+            Point s3 = new Point(xDeb + width/2, yDeb + height);
+            Point s4 = new Point(xDeb, yDeb + height/2);
+
+            double grandAxe = max(width, height);
+            double petitAxe = min(width, height);
+
+            double h = s1.getX();
+            double k = s1.getY();
+
+            double a = grandAxe/2;
+            double b = petitAxe/2;
+
+
+
+
+            double f1 = -1;
+            double f2 = -1;
         }
         else if (type == TYPE_LIGNE) /* Ligne */
         {
-            int xM = (xDeb + xFin) / 2;
-            int yM = (yDeb + yFin) / 2;
-            int r  = 5;
-            return (x - xM) * (x - xM) + (y - yM) * (y - yM) <= r * r;
+            // fonctionne
+            double m = (double)(yFin-yDeb)/(double)(xFin-xDeb); // OK
+            double b = yDeb + ((double)(m*xDeb) * (-1)); // OK
+
+            double y = m*posx+b;
+
+            return posy >= y-stroke  && posy <= y+stroke && (posx >= xDeb-1 && posx <= xFin+1 || posx >= xFin+1 && posx <= xDeb+1);
         }
         else if (type == TYPE_TEXT) /* Texte */
         {
-            return x >= xDeb && x <= xFin && y >= yDeb && y <= yFin;
+            // fonctionne
+            int xDebRect = this.xDeb;
+            int xFinRect = xDebRect + ((this.yFin - this.yDeb) * (int)(this.text.length()/1.5));
+            int yDebRect = this.yDeb - (int)((this.yFin-this.yDeb) * 0.8);
+            int yFinRect = yDebRect + (this.yFin - this.yDeb);
+
+            return posx >= xDebRect && posx <= xFinRect && posy >= yDebRect && posy <= yFinRect;
         }
 
         return false;
@@ -113,6 +145,7 @@ public class Forme implements java.io.Serializable
     public void setYDeb   (int   yDeb    ) { this.yDeb = yDeb; }
     public void setXFin   (int   xFin    ) { this.xFin = min(max(xFin, 0), TAILLE_PLATEAU[0]); }
     public void setYFin   (int   yFin    ) { this.yFin = min(max(yFin, 0), TAILLE_PLATEAU[1]); }
+    public void setStroke (int   stroke  ) { this.stroke = stroke; }
     public void setType   (int   type    ) { this.type = type; }
     public void setRempli (boolean rempli) { this.rempli = rempli; }
     public void setCouleur(Color couleur ) { this.couleur = couleur; }
