@@ -186,13 +186,12 @@ public class Controleur
     public void newDrawingArea()
     {
         this.metier.newDrawingArea();
+
         if (this.client != null)
             this.client.sendClear();
         
         if (this.serverThread != null)
             this.serverThread.broadcastClear();
-        
-
     }
 
     public void newDrawingAreaNetwork() { this.metier.newDrawingArea(); }
