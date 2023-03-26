@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import controleur.Controleur;
+import ihm.popUp.PopUpForme;
 import metier.Forme;
 
 
@@ -28,6 +29,8 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     private Point ancienPointSourie;
     private boolean drag;
 
+    private PopUpForme popUpForme;
+
 
     public PanelPaint(Controleur ctrl, int[] taillePlateau)
     {
@@ -39,6 +42,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         this.currentShape = null;
         this.ancienPointSourie = null;
         this.drag = false;
+        this.popUpForme = new PopUpForme(this.ctrl);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
 		this.setSize(taillePlateau[0], taillePlateau[1]);
@@ -187,7 +191,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         this.drag = false;
         if (me.getButton() != MouseEvent.BUTTON1 || this.ctrl.getPeindre()) { this.currentShape = null; return; }
 
-        if (this.currentShape.getYFin() - this.currentShape.getYDeb() <= 3 && this.currentShape.getXFin() - this.currentShape.getXDeb() <= 3)
+        if (this.currentShape.getYFin() - this.currentShape.getYDeb() <= 3 && this.currentShape.getXFin() - this.currentShape.getXDeb() <= 3 && this.currentShape.getType() != Forme.TYPE_LIGNE)
         {
             this.ctrl.getLstFormes().remove(this.currentShape);
             this.repaint();
@@ -239,7 +243,12 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         }
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
-            // TODO : afficher une popup pour supprimer la forme et la modifier
+            this.setCurrentShape(me.getX(), me.getY());
+            if (this.currentShape != null)
+            {
+                this.popUpForme.show(this, me.getX(), me.getY(), this.currentShape);
+                this.repaint();
+            }
         }
 
         this.currentShape = null;
@@ -252,4 +261,12 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseEntered(MouseEvent me) {}
     @Override
     public void mouseExited(MouseEvent me) {}
+
+    /**
+     * Permet d'appliquer le thème à la pop-up
+     */
+    public void appliquerTheme()
+    {
+        this.popUpForme.appliquerTheme();
+    }
 }

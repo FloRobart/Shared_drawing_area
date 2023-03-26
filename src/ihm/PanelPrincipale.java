@@ -57,5 +57,6 @@ public class PanelPrincipale extends JPanel
         this.panelConteneur.setBackground(backGeneralColor);
         this.scrollPane.getHorizontalScrollBar().setBackground(backGeneralColor);
         this.scrollPane.getVerticalScrollBar  ().setBackground(backGeneralColor);
+        this.panelPaint.appliquerTheme();
     }
 }

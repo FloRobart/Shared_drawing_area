@@ -9,46 +9,37 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import controleur.Controleur;
+import metier.Forme;
 
 
-public class popUpForme extends JPopupMenu implements ActionListener
+public class PopUpForme extends JPopupMenu implements ActionListener
 {
     private Controleur ctrl;
 
-
-    private JMenuItem changeDrive;
-    private JMenuItem open;
-    private JMenuItem openWith;
-    private JMenuItem edit;
+    private JMenuItem remove;
+    private Forme formeToRemove;
 
 
-    public popUpForme(Controleur ctrl)
+    public PopUpForme(Controleur ctrl)
     {
         this.ctrl = ctrl;
+        this.formeToRemove = null;
 
         /* Création des composants */
-        this.changeDrive = new JMenuItem();
-        this.open        = new JMenuItem();
-        this.openWith    = new JMenuItem();
-        this.edit        = new JMenuItem();
+        this.remove = new JMenuItem("Supprimer");
 
 
         /* Ajouts des composants */
-        this.add(this.open     );
-        this.add(this.openWith );
-        this.add(this.edit     );
+        this.add(this.remove);
 
         /* Activations des composants */
-        this.changeDrive.addActionListener(this);
-        this.open       .addActionListener(this);
-        this.openWith   .addActionListener(this);
-        this.edit       .addActionListener(this);
+        this.remove.addActionListener(this);
     }
 
-    @Override
-    public void show(Component c, int x, int y)
+    public void show(Component c, int x, int y, Forme f)
     {
         super.show(c, x, y);
+        this.formeToRemove = f;
     }
 
     @Override
@@ -57,24 +48,10 @@ public class popUpForme extends JPopupMenu implements ActionListener
         Object source = e.getSource();
 
         /* Changer de lecteur */
-        if (source == this.changeDrive)
+        if (source == this.remove)
         {
-            
-        }
-        /* Ouvrir */
-        else if (source == this.open)
-        {
-            
-        }
-        /* Ouvrir avec */
-        else if (source == this.openWith)
-        {
-            
-        }
-        /* Editer */
-        else if (source == this.edit)
-        {
-            
+            this.ctrl.removeForme(this.formeToRemove);
+            this.ctrl.majIhm();
         }
     }
 
@@ -91,16 +68,7 @@ public class popUpForme extends JPopupMenu implements ActionListener
         this.setBackground(backGeneralColor);
         this.setForeground(foreGeneralColor);
 
-        this.changeDrive.setBackground(backGeneralColor);
-        this.changeDrive.setForeground(foreGeneralColor);
-
-        this.open.setBackground(backGeneralColor);
-        this.open.setForeground(foreGeneralColor);
-
-        this.openWith.setBackground(backGeneralColor);
-        this.openWith.setForeground(foreGeneralColor);
-
-        this.edit.setBackground(backGeneralColor);
-        this.edit.setForeground(foreGeneralColor);
+        this.remove.setBackground(backGeneralColor);
+        this.remove.setForeground(foreGeneralColor);
     }
 }

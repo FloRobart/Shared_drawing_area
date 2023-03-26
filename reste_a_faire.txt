@@ -1,3 +1,0 @@
-drag les formes avec le clique droit
-changer la couleur d'une forme de type texte
-changer la couleur d'une forme de type ligne
