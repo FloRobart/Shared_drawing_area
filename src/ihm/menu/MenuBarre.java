@@ -341,7 +341,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiMultiJoueurCreerServer)
 			{
 				this.ctrl.startServer();
-				System.out.println("Serveur démarré");
 			}
 
 			/* Rejoindre un serveur */
