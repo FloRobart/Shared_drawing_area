@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -274,8 +277,26 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/* Ouvrir */
 			if (e.getSource() == this.menuiFichiersOuvrir)
 			{
-				this.ctrl.openDrawingArea();
-				this.ctrl.majIhm();
+				JFileChooser jfc = new JFileChooser("./bin/donnees/drawing_zone_save/");
+				jfc.setFileFilter(new FileNameExtensionFilter("Fichier de dessin", "data"));
+				jfc.setAcceptAllFileFilterUsed(false);
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setBackground(Color.BLACK);
+				jfc.setForeground(Color.WHITE);
+				jfc.showOpenDialog(this);
+
+				if (jfc.getSelectedFile() != null)
+				{
+					if (jfc.getSelectedFile().getName().contains("drawing_zone_save_"))
+					{
+						this.ctrl.openDrawingArea();
+						this.ctrl.majIhm();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(this, "Le fichier sélectionné n'est pas un fichier de dessin.", "Erreur", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 
 			/* Sauvegarder */

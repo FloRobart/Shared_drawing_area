@@ -230,8 +230,17 @@ public class Metier
      */
     public void saveDrawingArea()
     {
+		try
+		{
+			File dossier = new File("./bin/donnees/drawing_zone_save/");
+			PrintWriter pw = new PrintWriter("./bin/donnees/drawing_zone_save/drawing_zone_save_" + dossier.listFiles().length + ".data");
 
-		//PrintWriter pw = new PrintWriter(null);
+			for (Forme forme : this.lstFormes)
+				pw.println(forme.serialisable());
+
+			pw.close();
+		}
+		catch (FileNotFoundException e) { e.printStackTrace(); }
     }
 
 

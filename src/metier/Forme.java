@@ -171,13 +171,48 @@ public class Forme implements java.io.Serializable
         yOrig = yDeb;
     }
 
-    public void serialisable()
+
+    //private int xDeb;
+    //private int yDeb;
+    //private int xFin;
+    //private int yFin;
+    //private int stroke;
+    //private int type;
+    //private boolean rempli;
+    //private Color couleur;
+    //private String text;
+//
+    //private int xOrig;
+    //private int yOrig;
+//
+    //private String id;
+
+
+    public String serialisable()
     {
-        // TODO
+        String sRet = "";
+
+        sRet += xDeb + ";" + yDeb + ";" + xFin + ";" + yFin + ";" + stroke + ";" + type + ";" + rempli + ";" + couleur.getRGB() + ";" + text.replace(";", "\\;") + ";" + xOrig + ";" + yOrig + ";" + id;
+
+
+        return sRet;
     }
 
-    public void deserialisable()
+    public Forme deserialisable(int xDeb, int yDeb, int xFin, int yFin, int stroke, int type, boolean rempli, Color couleur, String text, int xOrig, int yOrig, String id)
     {
-        // TODO
+        this.xDeb = xDeb;
+        this.yDeb = yDeb;
+        this.xFin = xFin;
+        this.yFin = yFin;
+        this.stroke = stroke;
+        this.type = type;
+        this.rempli = rempli;
+        this.couleur = couleur;
+        this.text = text;
+        this.xOrig = xOrig;
+        this.yOrig = yOrig;
+        this.id = id;
+
+        return null;
     }
 }
