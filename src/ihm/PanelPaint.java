@@ -147,12 +147,10 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
         else if (me.getButton() == MouseEvent.BUTTON3)
         {
             this.buttonDragged = MouseEvent.BUTTON3;
-            System.out.println("Clic droit : " + me.getX() + " : " + me.getY());
             this.setCurrentShape(me.getX(), me.getY());
             this.ancienPointSourie = me.getPoint();
         }
 
-        System.out.println("lsite des formes : " + this.ctrl.getLstFormes().size());
         this.repaint();
     }
 

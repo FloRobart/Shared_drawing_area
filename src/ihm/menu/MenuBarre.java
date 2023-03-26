@@ -377,7 +377,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
                 String ip = JOptionPane.showInputDialog("Entrez l'adresse IP du serveur :");
 				Boolean success = this.ctrl.joinServer(ip);
 
-                if (!success)
+                if (success)
+					JOptionPane.showMessageDialog(null, "Connexion au serveur réussie.", "Information", JOptionPane.INFORMATION_MESSAGE);
+				else
                     JOptionPane.showMessageDialog(null, "Impossible de se connecter au serveur.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 
 			}
