@@ -9,6 +9,7 @@ import reseau.ServerThread;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Color;
+import java.io.File;
 
 
 public class Controleur
@@ -183,7 +184,7 @@ public class Controleur
     /**
      * Permet de charger un dessin
      */
-    public void openDrawingArea() { this.metier.openDrawingArea(); }
+    public void openDrawingArea(File fileSelected) { this.metier.openDrawingArea(fileSelected); }
 
     /**
      * Permet de sauvegarder un dessin
@@ -194,6 +195,104 @@ public class Controleur
      * Permet de quitter l'application
      */
     public void quitter() { this.ihm.dispose(); }
+
+
+
+    /*========================*/
+    /* Gestion du multijoueur */
+    /*========================*/
+    public Boolean startServer()
+    {
+        if (this.serverThread == null)
+        {
+            this.serverThread = new ServerThread(this);
+            this.serverThread.start();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Boolean joinServer()
+    {
+        this.client = new Client(this);
+        this.client.Connect("127.0.0.1", 31337, "JoeTesto");
+
+
+        return true;
+    }
+
+    public void majForme(Forme forme)
+    {
+        for (Forme f : this.getLstFormes())
+        {
+            if (f.getId().equals(forme.getId()))
+            {
+                for (java.lang.reflect.Field field : f.getClass().getDeclaredFields())
+                {
+                    // if the field is not final or static
+                    if ((field.getModifiers() & 0x00000010) == 0 && (field.getModifiers() & 0x00000008) == 0)
+                    {
+                        field.setAccessible(true);
+                        try {
+                            field.set(f, field.get(forme));
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        this.majIhm();
+    }
+
+
+
+
+    public void ihmMajForme(Forme forme)
+    {
+        if (this.client != null)
+        {
+            this.client.majForme(forme);
+        }
+        if (this.serverThread != null)
+        {
+            this.serverThread.broadcastMajForme(forme);
+        }
+    }
+
+
+
+
+    public void removeFormeNetwork(String id)
+    {
+        for (Forme f : this.getLstFormes())
+        {
+            if (f.getId().equals(id))
+            {
+                this.removeForme(f);
+                break;
+            }
+        }
+        this.majIhm();
+    }
+
+    public void unRemoveFormeNetwork(String id)
+    {
+        for (Forme f : this.metier.getLstFormesSupprimer())
+        {
+            if (f.getId().equals(id))
+            {
+                this.metier.unRemoveForme(f);
+                break;
+            }
+        }
+        this.majIhm();
+    }
 
 
 
@@ -309,103 +408,6 @@ public class Controleur
      * @return List : liste des clés
      */
     public String[] getEnsClesThemes() { return this.metier.getEnsClesThemes(); }
-
-
-    /*========================*/
-    /* Gestion du multijoueur */
-    /*========================*/
-    public Boolean startServer()
-    {
-        if (this.serverThread == null)
-        {
-            this.serverThread = new ServerThread(this);
-            this.serverThread.start();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public Boolean joinServer()
-    {
-        this.client = new Client(this);
-        this.client.Connect("127.0.0.1", 31337, "JoeTesto");
-
-
-        return true;
-    }
-
-    public void majForme(Forme forme)
-    {
-        for (Forme f : this.getLstFormes())
-        {
-            if (f.getId().equals(forme.getId()))
-            {
-                for (java.lang.reflect.Field field : f.getClass().getDeclaredFields())
-                {
-                    // if the field is not final or static
-                    if ((field.getModifiers() & 0x00000010) == 0 && (field.getModifiers() & 0x00000008) == 0)
-                    {
-                        field.setAccessible(true);
-                        try {
-                            field.set(f, field.get(forme));
-                        } catch (IllegalArgumentException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-        this.majIhm();
-    }
-
-
-
-
-    public void ihmMajForme(Forme forme)
-    {
-        if (this.client != null)
-        {
-            this.client.majForme(forme);
-        }
-        if (this.serverThread != null)
-        {
-            this.serverThread.broadcastMajForme(forme);
-        }
-    }
-
-
-
-
-    public void removeFormeNetwork(String id)
-    {
-        for (Forme f : this.getLstFormes())
-        {
-            if (f.getId().equals(id))
-            {
-                this.removeForme(f);
-                break;
-            }
-        }
-        this.majIhm();
-    }
-
-    public void unRemoveFormeNetwork(String id)
-    {
-        for (Forme f : this.metier.getLstFormesSupprimer())
-        {
-            if (f.getId().equals(id))
-            {
-                this.metier.unRemoveForme(f);
-                break;
-            }
-        }
-        this.majIhm();
-    }
 
 
 

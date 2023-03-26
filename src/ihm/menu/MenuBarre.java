@@ -279,17 +279,14 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			{
 				JFileChooser jfc = new JFileChooser("./bin/donnees/drawing_zone_save/");
 				jfc.setFileFilter(new FileNameExtensionFilter("Fichier de dessin", "data"));
-				jfc.setAcceptAllFileFilterUsed(false);
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setBackground(Color.BLACK);
-				jfc.setForeground(Color.WHITE);
 				jfc.showOpenDialog(this);
 
 				if (jfc.getSelectedFile() != null)
 				{
 					if (jfc.getSelectedFile().getName().contains("drawing_zone_save_"))
 					{
-						this.ctrl.openDrawingArea();
+						this.ctrl.openDrawingArea(jfc.getSelectedFile());
 						this.ctrl.majIhm();
 					}
 					else

@@ -220,9 +220,35 @@ public class Metier
     /**
      * Permet de charger un dessin
      */
-    public void openDrawingArea()
+    public void openDrawingArea(File fileSelected)
     {
-        
+		try
+		{
+			Scanner sc = new Scanner(fileSelected);
+			this.newDrawingArea();
+
+			while (sc.hasNextLine())
+			{
+				String[] ensDonnees = sc.nextLine().split(";");
+			
+				for (int i = 12; i < ensDonnees.length; i++)
+					ensDonnees[11] += ";" + ensDonnees[i];
+
+				Forme forme;
+				int type = Integer.parseInt(ensDonnees[5]);
+
+				if (type == Forme.TYPE_TEXT)
+					forme = Forme.deserialisable(Integer.parseInt(ensDonnees[0]), Integer.parseInt(ensDonnees[1]), Integer.parseInt(ensDonnees[2]), Integer.parseInt(ensDonnees[3]), Integer.parseInt(ensDonnees[4]), type, Boolean.parseBoolean(ensDonnees[6]), new Color(Integer.parseInt(ensDonnees[7])), ensDonnees[11], Integer.parseInt(ensDonnees[8]), Integer.parseInt(ensDonnees[9]), ensDonnees[10]);
+				else
+					forme = Forme.deserialisable(Integer.parseInt(ensDonnees[0]), Integer.parseInt(ensDonnees[1]), Integer.parseInt(ensDonnees[2]), Integer.parseInt(ensDonnees[3]), Integer.parseInt(ensDonnees[4]), type, Boolean.parseBoolean(ensDonnees[6]), new Color(Integer.parseInt(ensDonnees[7])), null, Integer.parseInt(ensDonnees[8]), Integer.parseInt(ensDonnees[9]), ensDonnees[10]);
+
+				
+				this.lstFormes.add(forme);
+			}
+
+			sc.close();
+		}
+		catch (Exception e) { e.printStackTrace(); }
     }
 
     /**
@@ -232,8 +258,15 @@ public class Metier
     {
 		try
 		{
+			int numFichier = 0;
 			File dossier = new File("./bin/donnees/drawing_zone_save/");
-			PrintWriter pw = new PrintWriter("./bin/donnees/drawing_zone_save/drawing_zone_save_" + dossier.listFiles().length + ".data");
+			for (File f : dossier.listFiles())
+				if (f.getName().equals("drawing_zone_save_" + numFichier + ".data")) numFichier++; else break;
+			
+
+
+
+			PrintWriter pw = new PrintWriter("./bin/donnees/drawing_zone_save/drawing_zone_save_" + numFichier + ".data");
 
 			for (Forme forme : this.lstFormes)
 				pw.println(forme.serialisable());

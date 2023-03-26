@@ -32,6 +32,11 @@ public class Forme implements java.io.Serializable
     private String id;
 
 
+    private Forme()
+    {
+        this(0, 0, 0, 0, 0, 0, false, Color.BLACK);
+    }
+
     public Forme(int xDeb, int yDeb, int xFin, int yFin, int stroke, int type, boolean rempli, Color couleur)
     {
         
@@ -150,6 +155,10 @@ public class Forme implements java.io.Serializable
     public void setType   (int   type    ) { this.type = type; }
     public void setRempli (boolean rempli) { this.rempli = rempli; }
     public void setCouleur(Color couleur ) { this.couleur = couleur; }
+    private void setId    (String id     ) { this.id = id; }
+    private void setXOrig (int   xOrig   ) { this.xOrig = xOrig; }
+    private void setYOrig (int   yOrig   ) { this.yOrig = yOrig; }
+
     public void setText   (String text   )
     {
         if (type != TYPE_TEXT) throw new IllegalArgumentException("La forme n'est pas un texte");
@@ -192,27 +201,30 @@ public class Forme implements java.io.Serializable
     {
         String sRet = "";
 
-        sRet += xDeb + ";" + yDeb + ";" + xFin + ";" + yFin + ";" + stroke + ";" + type + ";" + rempli + ";" + couleur.getRGB() + ";" + text.replace(";", "\\;") + ";" + xOrig + ";" + yOrig + ";" + id;
+        sRet += xDeb + ";" + yDeb + ";" + xFin + ";" + yFin + ";" + stroke + ";" + type + ";" + rempli + ";" + couleur.getRGB() + ";" + xOrig + ";" + yOrig + ";" + id + ";" + text + ";";
 
 
         return sRet;
     }
 
-    public Forme deserialisable(int xDeb, int yDeb, int xFin, int yFin, int stroke, int type, boolean rempli, Color couleur, String text, int xOrig, int yOrig, String id)
+    public static Forme deserialisable(int xDeb, int yDeb, int xFin, int yFin, int stroke, int type, boolean rempli, Color couleur, String text, int xOrig, int yOrig, String id)
     {
-        this.xDeb = xDeb;
-        this.yDeb = yDeb;
-        this.xFin = xFin;
-        this.yFin = yFin;
-        this.stroke = stroke;
-        this.type = type;
-        this.rempli = rempli;
-        this.couleur = couleur;
-        this.text = text;
-        this.xOrig = xOrig;
-        this.yOrig = yOrig;
-        this.id = id;
+        Forme forme = new Forme();
+        forme.setXDeb(xDeb);
+        forme.setYDeb(yDeb);
+        forme.setXFin(xFin);
+        forme.setYFin(yFin);
+        forme.setStroke(stroke);
+        forme.setType(type);
+        forme.setRempli(rempli);
+        forme.setCouleur(couleur);
+        forme.setXOrig(xOrig);
+        forme.setYOrig(yOrig);
+        forme.setId(id);
+        
+        if (type == TYPE_TEXT)
+            forme.setText(text);
 
-        return null;
+        return forme;
     }
 }
