@@ -18,10 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
