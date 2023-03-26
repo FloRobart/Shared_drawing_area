@@ -12,7 +12,6 @@ import javax.swing.KeyStroke;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.awt.event.InputEvent;
 
@@ -39,8 +38,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenuItem menuiFichiersSauvegarder;
 	private JMenuItem menuiFichiersAnnuler;
 	private JMenuItem menuiFichiersRestorer;
+	private JMenuItem menuiFichiersQuitter;
 
-	/* Fichier */
+	/* Multijoueur */
 	private JMenuItem menuiMultiJoueurCreerServer;
 	private JMenuItem menuiMultiJoueurRejoindreServer;
 
@@ -67,7 +67,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*----------*/
 		/* Fichiers */
 		/*----------*/
-		// TODO : Ajouter les composants pour les fichiers (potentiellemnt les mêmes qui pour le clique droit pour faire fonctionner les raccourcis clavier)
 		this.menuFichiers = new JMenu("Fichiers");
 		this.menuFichiers.setMnemonic('F');
 
@@ -90,6 +89,11 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/* Restorer */
 		this.menuiFichiersRestorer = new JMenuItem("Restorer");
 		this.menuiFichiersRestorer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
+
+		/* Quitter */
+		this.menuiFichiersQuitter = new JMenuItem("Quitter");
+		this.menuiFichiersQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+
 
 		/*--------------*/
 		/* Multi-Joueur */
@@ -156,6 +160,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 		/* Restorer */
 		this.menuFichiers.add(this.menuiFichiersRestorer);
+
+		/* Quitter */
+		this.menuFichiers.addSeparator();
+		this.menuFichiers.add(this.menuiFichiersQuitter);
 
 		/* Ajout de tout à la JMenuBar */
 		this.add(menuFichiers);
@@ -224,10 +232,12 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/* Restorer */
 		this.menuiFichiersRestorer.addActionListener(this);
 
+		/* Quitter */
+		this.menuiFichiersQuitter.addActionListener(this);
+
 		/*--------------*/
 		/* Multi-Joueur */
 		/*--------------*/
-
 		/* Créer un serveur */
 		this.menuiMultiJoueurCreerServer.addActionListener(this);
 
@@ -257,21 +267,21 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			/* Nouveau */
 			if (e.getSource() == this.menuiFichiersNouveau)
 			{
-				//this.ctrl.new();
+				this.ctrl.newDrawingArea();
 				this.ctrl.majIhm();
 			}
 
 			/* Ouvrir */
 			if (e.getSource() == this.menuiFichiersOuvrir)
 			{
-				//this.ctrl.open();
+				this.ctrl.openDrawingArea();
 				this.ctrl.majIhm();
 			}
 
 			/* Sauvegarder */
 			if (e.getSource() == this.menuiFichiersSauvegarder)
 			{
-				//this.ctrl.save();
+				this.ctrl.saveDrawingArea();
 			}
 
 			/* Annuler */
@@ -290,11 +300,16 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				this.ctrl.unRemoveForme();
 				this.ctrl.majIhm();
 			}
+
+			/* Quitter */
+			if (e.getSource() == this.menuiFichiersQuitter)
+			{
+				this.ctrl.quitter();
+			}
 		
 			/*--------------*/
 			/* Multi-Joueur */
 			/*--------------*/
-
 			/* Créer un serveur */
 			if (e.getSource() == this.menuiMultiJoueurCreerServer)
 			{
@@ -306,8 +321,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
 			{
 				this.ctrl.joinServer();
-
-				
 			}
 
 			/*-------------*/
@@ -431,11 +444,36 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*---------*/
 		this.menuFichiers.setBackground(backGeneralColor);
 		this.menuFichiers.setForeground(foreGeneralColor);
+
+		/* Nouveau */
+		this.menuiFichiersNouveau.setBackground(backGeneralColor);
+		this.menuiFichiersNouveau.setForeground(foreGeneralColor);
+
+		/* Ouvrir */
+		this.menuiFichiersOuvrir.setBackground(backGeneralColor);
+		this.menuiFichiersOuvrir.setForeground(foreGeneralColor);
+
+		/* Sauvegarder */
+		this.menuiFichiersSauvegarder.setBackground(backGeneralColor);
+		this.menuiFichiersSauvegarder.setForeground(foreGeneralColor);
+
+		/* Annuler */
+		this.menuiFichiersAnnuler.setBackground(backGeneralColor);
+		this.menuiFichiersAnnuler.setForeground(foreGeneralColor);
+
+		/* Restorer */
+		this.menuiFichiersRestorer.setBackground(backGeneralColor);
+		this.menuiFichiersRestorer.setForeground(foreGeneralColor);
+
+		/* Quitter */
+		this.menuiFichiersQuitter.setBackground(backGeneralColor);
+		this.menuiFichiersQuitter.setForeground(foreGeneralColor);
+
+
 		
 		/*-------------*/
 		/* MutliJoueur */
 		/*-------------*/
-
 		this.menuMultiJoueur.setBackground(backGeneralColor);
 		this.menuMultiJoueur.setForeground(foreGeneralColor);
 

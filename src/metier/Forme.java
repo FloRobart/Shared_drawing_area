@@ -152,7 +152,7 @@ public class Forme implements java.io.Serializable
     public void setCouleur(Color couleur ) { this.couleur = couleur; }
     public void setText   (String text   )
     {
-        if (type != TYPE_TEXT) throw new RuntimeException("La forme n'est pas un texte");
+        if (type != TYPE_TEXT) throw new IllegalArgumentException("La forme n'est pas un texte");
         this.text = text;
     }
 

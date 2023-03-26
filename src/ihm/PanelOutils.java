@@ -34,6 +34,7 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
     private JButton btnCouleur;
     private JButton btnPeindre;
     private JSlider slider;
+    private JLabel lblSlider;
 
     private Border defaultBorder;
     private Border selectedBorder;
@@ -54,6 +55,7 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
         this.btnCouleur = new JButton("");
         this.btnPeindre = new JButton("");
         this.slider     = new JSlider(JSlider.HORIZONTAL, 1, 50, this.ctrl.getStroke());
+        this.lblSlider  = new JLabel(""+this.ctrl.getStroke());
 
         this.defaultBorder  = this.btnLigne.getBorder();
         this.selectedBorder = BorderFactory.createBevelBorder(1, this.ctrl.getTheme().get("enableColor"), this.ctrl.getTheme().get("enableColor"));
@@ -69,6 +71,8 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
         this.btnRempli .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
         this.btnCouleur.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
         this.btnPeindre.setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.lblSlider .setPreferredSize(new Dimension(PanelOutils.TAILLE_BOUTONS, PanelOutils.TAILLE_BOUTONS));
+        this.slider    .setPreferredSize(new Dimension(100, 50));
 
         /* Couleur et dessins */
         this.btnLigne  .setIcon(this.iconLigne  ());
@@ -81,6 +85,16 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
 
         /* Bordure */
         this.btnLigne  .setBorder(this.selectedBorder);
+
+        /* Slider */
+        this.slider.setMajorTickSpacing(9);
+        this.slider.setPaintTicks(true);
+        this.slider.setPaintLabels(true);
+
+        /* Label */
+        this.lblSlider.setFont(new Font("Arial", Font.PLAIN, 40));
+        this.lblSlider.setOpaque(false);
+
 
 
         /*----------------------*/
@@ -109,7 +123,9 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
                 .addComponent(btnPeindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(slider, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSlider,GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         /* Verticale */
@@ -117,16 +133,20 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLigne, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCercle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCarre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTexte, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPeindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRempli, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLigne, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCercle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCarre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTexte, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPeindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRempli, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
 
@@ -204,7 +224,9 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
     @Override
     public void stateChanged(ChangeEvent ce)
     {
-        this.ctrl.setStroke(((JSlider)(ce.getSource())).getValue());
+        int value = ((JSlider)(ce.getSource())).getValue();
+        this.ctrl.setStroke(value);
+        this.lblSlider.setText("" + value);
     }
 
     /**
@@ -499,6 +521,11 @@ public class PanelOutils extends JPanel implements ActionListener, ChangeListene
     {
         this.setBackground(this.ctrl.getTheme().get("background"));
         this.setForeground(this.ctrl.getTheme().get("foreground"));
+
+        this.slider.setBackground(this.ctrl.getTheme().get("background"));
+        this.slider.setForeground(this.ctrl.getTheme().get("foreground"));
+
+        this.lblSlider.setForeground(this.ctrl.getTheme().get("foreground"));
 
         btnLigne  .setIcon(this.iconLigne  ());
         btnCercle .setIcon(this.iconCercle ());

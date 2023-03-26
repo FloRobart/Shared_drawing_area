@@ -96,7 +96,8 @@ public class Controleur
 	 * Cette méthode ajoute la forme passé en paramètre à la liste des formes et la supprime de la liste des formes supprimé.
 	 * @param forme : forme à rétablir.
 	 */
-	public void unRemoveForme() {
+	public void unRemoveForme()
+    {
         this.metier.unRemoveForme();
 
         if (this.client != null)
@@ -104,8 +105,6 @@ public class Controleur
         
         if (this.serverThread != null)
             this.serverThread.broadcastUnRemoveForme(this.metier.getLstFormes().get(this.metier.getLstFormes().size() - 1));
-        
-
     }
 
     /**
@@ -171,6 +170,30 @@ public class Controleur
      * Permet de mettre à jour l'IHM
      */
     public void majIhm() { this.ihm.majIhm(); }
+
+
+    /*===========================================*/
+    /* Gestion des menus Fichier de la menuBarre */
+    /*===========================================*/
+    /**
+     * Permet de créer unu nouvelle zone de dessin
+     */
+    public void newDrawingArea() { this.metier.newDrawingArea(); }
+
+    /**
+     * Permet de charger un dessin
+     */
+    public void openDrawingArea() { this.metier.openDrawingArea(); }
+
+    /**
+     * Permet de sauvegarder un dessin
+     */
+    public void saveDrawingArea() { this.metier.saveDrawingArea(); }
+
+    /**
+     * Permet de quitter l'application
+     */
+    public void quitter() { this.ihm.dispose(); }
 
 
 
@@ -288,6 +311,9 @@ public class Controleur
     public String[] getEnsClesThemes() { return this.metier.getEnsClesThemes(); }
 
 
+    /*========================*/
+    /* Gestion du multijoueur */
+    /*========================*/
     public Boolean startServer()
     {
         if (this.serverThread == null)
@@ -310,15 +336,6 @@ public class Controleur
 
         return true;
     }
-
-
-    public static void main(String[] args)
-    {
-        new Controleur();
-    }
-
-
-
 
     public void majForme(Forme forme)
     {
@@ -388,5 +405,13 @@ public class Controleur
             }
         }
         this.majIhm();
+    }
+
+
+
+
+    public static void main(String[] args)
+    {
+        new Controleur();
     }
 }

@@ -203,6 +203,37 @@ public class Metier
 
 
 
+	/*==============================*/
+	/* Gestion de la zone de dessin */
+	/*==============================*/
+	/**
+     * Permet de créer unu nouvelle zone de dessin
+     */
+    public void newDrawingArea()
+    {
+        this.lstFormes.clear();
+		this.lstFormesSupprimer.clear();
+
+		this.ctrl.majIhm();
+    }
+
+    /**
+     * Permet de charger un dessin
+     */
+    public void openDrawingArea()
+    {
+        
+    }
+
+    /**
+     * Permet de sauvegarder un dessin
+     */
+    public void saveDrawingArea()
+    {
+
+		//PrintWriter pw = new PrintWriter(null);
+    }
+
 
 
     /*========*/
