@@ -244,6 +244,7 @@ public class Metier
 
 				
 				this.lstFormes.add(forme);
+				this.ctrl.finaliseForme(forme);
 			}
 
 			sc.close();
@@ -262,8 +263,6 @@ public class Metier
 			File dossier = new File("./bin/donnees/drawing_zone_save/");
 			for (File f : dossier.listFiles())
 				if (f.getName().equals("drawing_zone_save_" + numFichier + ".data")) numFichier++; else break;
-			
-
 
 
 			PrintWriter pw = new PrintWriter("./bin/donnees/drawing_zone_save/drawing_zone_save_" + numFichier + ".data");

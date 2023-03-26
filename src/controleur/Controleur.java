@@ -68,6 +68,10 @@ public class Controleur
         this.metier.addForme(forme);
     }
 
+    /**
+     * Permet d'envoyer une forme au serveur et de la diffuser aux clients.
+     * @param forme : forme à envoyer.
+     */
     public void finaliseForme(Forme forme)
     {
         if (this.client != null)
@@ -201,6 +205,10 @@ public class Controleur
     /*========================*/
     /* Gestion du multijoueur */
     /*========================*/
+    /**
+     * Permet de démarrer un serveur
+     * @return true si le serveur a été démarré, false sinon
+     */
     public Boolean startServer()
     {
         if (this.serverThread == null)
@@ -215,6 +223,10 @@ public class Controleur
         }
     }
 
+    /**
+     * Permet de joindre un serveur
+     * @return true si la connexion a réussi, false sinon
+     */
     public Boolean joinServer()
     {
         this.client = new Client(this);
@@ -224,6 +236,10 @@ public class Controleur
         return true;
     }
 
+    /**
+     * Permet de mettre à jour une forme sur le réseau
+     * @param forme : forme à mettre à jour
+     */
     public void majForme(Forme forme)
     {
         for (Forme f : this.getLstFormes())
@@ -250,9 +266,10 @@ public class Controleur
         this.majIhm();
     }
 
-
-
-
+    /**
+     * Permet de mettre à jour une forme sur le réseau
+     * @param forme : forme à mettre à jour
+     */
     public void ihmMajForme(Forme forme)
     {
         if (this.client != null)
@@ -265,9 +282,10 @@ public class Controleur
         }
     }
 
-
-
-
+    /**
+     * Permet de supprimer une forme de la liste des formes
+     * @param id : id de la forme à supprimer
+     */
     public void removeFormeNetwork(String id)
     {
         for (Forme f : this.getLstFormes())
@@ -281,6 +299,10 @@ public class Controleur
         this.majIhm();
     }
 
+    /**
+     * Permet de supprimer une forme de la liste des formes supprimées
+     * @param id : id de la forme à supprimer
+     */
     public void unRemoveFormeNetwork(String id)
     {
         for (Forme f : this.metier.getLstFormesSupprimer())
@@ -294,6 +316,13 @@ public class Controleur
         this.majIhm();
     }
 
+    /**
+     * Permet de quitter le serveur
+     */
+    public void leaveServer()
+    {
+        
+    }
 
 
     /*========*/

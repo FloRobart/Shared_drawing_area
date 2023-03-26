@@ -46,6 +46,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	/* Multijoueur */
 	private JMenuItem menuiMultiJoueurCreerServer;
 	private JMenuItem menuiMultiJoueurRejoindreServer;
+	private JMenuItem menuiMultiJoueurQuitterServer;
 
 	/* Préférences */
 	private JMenu     menuiPreferencesThemes;
@@ -109,6 +110,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 		/* Rejoindre un serveur */
 		this.menuiMultiJoueurRejoindreServer = new JMenuItem("Rejoindre un serveur");
+
+		/* Quitter le serveur */
+		this.menuiMultiJoueurQuitterServer = new JMenuItem("Quitter le serveur");
 
 		/*-------------*/
 		/* Préférences */
@@ -174,12 +178,14 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*--------------*/
 		/* Multi-Joueur */
 		/*--------------*/
-
 		/* Créer un serveur */
 		this.menuMultiJoueur.add(this.menuiMultiJoueurCreerServer);
 
 		/* Rejoindre un serveur */
 		this.menuMultiJoueur.add(this.menuiMultiJoueurRejoindreServer);
+
+		/* Quitter le serveur */
+		this.menuMultiJoueur.add(this.menuiMultiJoueurQuitterServer);
 
 		/* Ajout de tout à la JMenuBar */
 		this.add(menuMultiJoueur);
@@ -246,6 +252,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 		/* Rejoindre un serveur */
 		this.menuiMultiJoueurRejoindreServer.addActionListener(this);
+
+		/* Quitter le serveur */
+		this.menuiMultiJoueurQuitterServer.addActionListener(this);
 
 		/*-------------*/
 		/* Préférences */
@@ -339,6 +348,12 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
 			{
 				this.ctrl.joinServer();
+			}
+
+			/* Quitter le serveur */
+			if (e.getSource() == this.menuiMultiJoueurQuitterServer)
+			{
+				this.ctrl.leaveServer();
 			}
 
 			/*-------------*/
@@ -502,6 +517,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/* Rejoindre une partie */
 		this.menuiMultiJoueurRejoindreServer.setBackground(backGeneralColor);
 		this.menuiMultiJoueurRejoindreServer.setForeground(foreGeneralColor);
+
+		/* Quitter une partie */
+		this.menuiMultiJoueurQuitterServer.setBackground(backGeneralColor);
+		this.menuiMultiJoueurQuitterServer.setForeground(foreGeneralColor);
 
 
 		/*------------*/
