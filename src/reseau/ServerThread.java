@@ -82,6 +82,14 @@ public class ServerThread extends Thread
         }
     }
 
+    public void broadcastClear()
+    {
+        for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
+        {
+            serverToClientSocket.clearDrawings();
+        }
+    }
+
     public Controleur getCtrl()
     {
         return this.ctrl;

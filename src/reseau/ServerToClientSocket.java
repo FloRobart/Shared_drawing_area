@@ -87,6 +87,18 @@ public class ServerToClientSocket extends Thread
         } 
     }
 
+    public void clearDrawings()
+    {
+        try {
+            oos.reset();
+            oos.writeObject("clear");
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+    }
+
 
     @Override
     public void run()
@@ -169,6 +181,12 @@ public class ServerToClientSocket extends Thread
                             break;
                         }
                     }
+                }
+
+                if (command.equals("clear"))
+                {
+                    this.serverThread.getCtrl().newDrawingAreaNetwork();
+                    this.serverThread.broadcastClear();
                 }
 
             }

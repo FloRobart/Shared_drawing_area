@@ -183,7 +183,19 @@ public class Controleur
     /**
      * Permet de créer unu nouvelle zone de dessin
      */
-    public void newDrawingArea() { this.metier.newDrawingArea(); }
+    public void newDrawingArea()
+    {
+        this.metier.newDrawingArea();
+        if (this.client != null)
+            this.client.sendClear();
+        
+        if (this.serverThread != null)
+            this.serverThread.broadcastClear();
+        
+
+    }
+
+    public void newDrawingAreaNetwork() { this.metier.newDrawingArea(); }
 
     /**
      * Permet de charger un dessin
