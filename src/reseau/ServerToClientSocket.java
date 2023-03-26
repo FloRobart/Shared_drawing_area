@@ -116,11 +116,7 @@ public class ServerToClientSocket extends Thread
                     break;
                 }
 
-                if (command.equals("name"))
-                {
-                    String name = (String)ois.readObject();
-                    System.out.println("Client name: " + name);
-                }
+                
 
                 if (command.equals("requestDrawing"))
                 {

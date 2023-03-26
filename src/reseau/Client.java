@@ -38,7 +38,7 @@ public class Client
         this.clientToServerSocket.sendClear();
     }
 
-    public Boolean Connect(String ip, int port, String name)
+    public Boolean Connect(String ip, int port)
     {
 
         if (this.clientToServerSocket.isAlive())
@@ -48,12 +48,12 @@ public class Client
 
         Boolean success = this.clientToServerSocket.Connect(ip, port);
 
-        this.clientToServerSocket.sendName(name);
-        this.clientToServerSocket.requestDrawing();
 
         if (success)
         {
             this.clientToServerSocket.start();
+            this.clientToServerSocket.requestDrawing();
+
         }
 
         return success;

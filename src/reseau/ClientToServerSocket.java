@@ -29,6 +29,17 @@ public class ClientToServerSocket extends Thread
             
             this.socket = new Socket(ip, port);
 
+            if (this.socket.isConnected())
+            {
+                System.out.println("Connexion établie avec le serveur");
+            }
+            else
+            {
+                System.err.println("Impossible de se connecter au serveur");
+                return false;
+            }
+
+
             this.oos = new ObjectOutputStream(socket.getOutputStream());
             this.ois = new ObjectInputStream(socket.getInputStream());
             this.running = true;
@@ -53,21 +64,7 @@ public class ClientToServerSocket extends Thread
 
     }
 
-    public void sendName(String name)
-    {
-        if (!this.running)
-        {
-            return;
-        }
-
-        try {
-            this.oos.writeObject("name");
-            this.oos.writeObject(name);
-        } catch (IOException e) {
-            System.err.println("Impossible d'envoyer le nom");
-            e.printStackTrace();
-        }
-    }
+    
     
     public void requestDrawing()
     {
