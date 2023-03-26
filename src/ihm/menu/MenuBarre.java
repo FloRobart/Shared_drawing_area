@@ -370,7 +370,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
         
                 JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
             }
-			}
 
 			/* Rejoindre un serveur */
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
@@ -428,6 +427,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 					this.ctrl.changerTheme(this.lstMenuiPreferencesThemesPerso.get(i).getText().replace(" ", "_"));
 		}
 	}
+	
 
 
 	/**
