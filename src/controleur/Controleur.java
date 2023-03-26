@@ -239,13 +239,11 @@ public class Controleur
      * Permet de joindre un serveur
      * @return true si la connexion a réussi, false sinon
      */
-    public Boolean joinServer()
+    public Boolean joinServer(String ip)
     {
         this.client = new Client(this);
-        this.client.Connect("127.0.0.1", 31337, "JoeTesto");
-
-
-        return true;
+        
+        return this.client.Connect(ip, 31337);
     }
 
     /**

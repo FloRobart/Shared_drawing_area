@@ -14,7 +14,12 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.KeyEvent;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.awt.event.InputEvent;
 
@@ -342,12 +347,39 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			{
 				this.ctrl.startServer();
 				System.out.println("Serveur démarré");
-			}
+
+                String txtIP = "Serveur démarré, voici vos addresse IP :\n";
+                try
+                {
+                    Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
+                    while (net.hasMoreElements()) {
+                        NetworkInterface element = net.nextElement();
+                        Enumeration<InetAddress> addresses = element.getInetAddresses();
+                        while (addresses.hasMoreElements()) {
+                            InetAddress ip = addresses.nextElement();
+                            if (ip instanceof Inet4Address) {
+                                
+                                if (!ip.getHostAddress().equals("127.0.0.1"))
+                                    txtIP += "IPV4 : " + ip.getHostAddress() + "\n";
+                            }
+                        }
+                    }
+                } catch (SocketException ee) {
+                    ee.printStackTrace();
+                }
+        
+                JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
+                }
 
 			/* Rejoindre un serveur */
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
 			{
-				this.ctrl.joinServer();
+                String ip = JOptionPane.showInputDialog("Entrez l'adresse IP du serveur :");
+				Boolean success = this.ctrl.joinServer(ip);
+
+                if (!success)
+                    JOptionPane.showMessageDialog(null, "Impossible de se connecter au serveur.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                
 			}
 
 			/* Quitter le serveur */
