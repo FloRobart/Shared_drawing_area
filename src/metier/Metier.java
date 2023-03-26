@@ -225,7 +225,7 @@ public class Metier
 		try
 		{
 			Scanner sc = new Scanner(fileSelected);
-			this.newDrawingArea();
+			this.ctrl.newDrawingArea();
 
 			while (sc.hasNextLine())
 			{
