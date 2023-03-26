@@ -33,6 +33,11 @@ public class Client
         this.clientToServerSocket.unRemvoeForme(form);
     }
 
+    public void sendClear()
+    {
+        this.clientToServerSocket.sendClear();
+    }
+
     public Boolean Connect(String ip, int port, String name)
     {
 

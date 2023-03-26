@@ -137,6 +137,18 @@ public class ClientToServerSocket extends Thread
         } 
     }
 
+    public void sendClear()
+    {
+        try {
+            oos.reset();
+            oos.writeObject("clear");
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run()
     {
@@ -185,6 +197,11 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("unRemoveDrawing"))
                 {
                     this.ctrl.unRemoveFormeNetwork((String)ois.readObject());
+                }
+
+                if (command.equals("clear"))
+                {
+                    this.ctrl.newDrawingAreaNetwork();
                 }
 
             }
