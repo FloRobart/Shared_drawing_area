@@ -242,7 +242,7 @@ public class Controleur
     {
         this.client = new Client(this);
         
-        return this.client.Connect(ip, 31337, pseudo);
+        return this.client.connect(ip, 31337, pseudo);
     }
 
     /**
@@ -323,14 +323,6 @@ public class Controleur
             }
         }
         this.majIhm();
-    }
-
-    /**
-     * Permet de quitter le serveur
-     */
-    public void leaveServer()
-    {
-        
     }
 
 
@@ -456,6 +448,20 @@ public class Controleur
             return true;
         }
         return false;
+    }
+
+    public void disconnectMulti()
+    {
+        if (this.client != null)
+        {
+            this.client.disconnect();
+            this.client = null;
+        }
+        if (this.serverThread != null)
+        {
+            this.serverThread.closeServer();
+            this.serverThread = null;
+        }
     }
 
 

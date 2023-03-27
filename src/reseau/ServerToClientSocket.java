@@ -31,7 +31,7 @@ public class ServerToClientSocket extends Thread
         }
     }
 
-    public void Disconnect()
+    public void disconnect()
     {
         this.running = false;
     }
@@ -100,6 +100,8 @@ public class ServerToClientSocket extends Thread
     }
 
 
+
+
     @Override
     public void run()
     {
@@ -112,7 +114,7 @@ public class ServerToClientSocket extends Thread
                 String command = (String)ois.readObject();
                 if (command.equals("disconnect"))
                 {
-                    this.Disconnect();
+                    this.disconnect();
                     break;
                 }
 
@@ -130,7 +132,7 @@ public class ServerToClientSocket extends Thread
                     {
                         oos.writeObject("usernameRefused");
                         oos.flush();
-                        this.Disconnect();
+                        this.disconnect();
                         System.out.println("Client username refused (" + username + ")");
                     }
                 }
@@ -208,7 +210,6 @@ public class ServerToClientSocket extends Thread
             catch (Exception e)
             {
                 System.err.println("Impossible de lire l'objet envoyé par le client");
-                e.printStackTrace();
                 break;
             }
 

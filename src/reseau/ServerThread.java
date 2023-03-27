@@ -1,5 +1,6 @@
 package reseau;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ServerThread extends Thread
     private ServerSocket serverSocket;
     private ArrayList<ServerToClientSocket> serverToClientSockets;
     private Controleur ctrl;
+    private Boolean running;
 
     public ServerThread(Controleur ctrl)
     {
@@ -21,6 +23,7 @@ public class ServerThread extends Thread
         {
             this.serverSocket = new ServerSocket(31337);
             this.serverToClientSockets = new ArrayList<ServerToClientSocket>();
+            this.running = true;
         }
         catch (Exception e)
         {
@@ -32,7 +35,7 @@ public class ServerThread extends Thread
     @Override
     public void run()
     {
-        while (true)
+        while (this.running)
         {
             // Accept a new client
             try
@@ -88,6 +91,23 @@ public class ServerThread extends Thread
         {
             serverToClientSocket.clearDrawings();
         }
+    }
+
+    public void closeServer()
+    {
+        for (ServerToClientSocket serverToClientSocket : this.serverToClientSockets)
+        {
+            serverToClientSocket.disconnect();
+        }
+        this.running = false;
+
+        try {
+            this.serverSocket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     public Controleur getCtrl()

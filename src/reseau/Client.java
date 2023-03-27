@@ -38,15 +38,20 @@ public class Client
         this.clientToServerSocket.sendClear();
     }
 
-    public Boolean Connect(String ip, int port, String pseudo)
+    public void disconnect()
+    {
+        this.clientToServerSocket.disconnect();
+    }
+
+    public Boolean connect(String ip, int port, String pseudo)
     {
 
         if (this.clientToServerSocket.isAlive())
         {
-            this.clientToServerSocket.Disconnect();
+            this.clientToServerSocket.disconnect();
         }
 
-        Boolean success = this.clientToServerSocket.Connect(ip, port);
+        Boolean success = this.clientToServerSocket.connect(ip, port);
 
 
         if (success)

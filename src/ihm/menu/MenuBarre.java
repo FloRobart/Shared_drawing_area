@@ -51,7 +51,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	/* Multijoueur */
 	private JMenuItem menuiMultiJoueurCreerServer;
 	private JMenuItem menuiMultiJoueurRejoindreServer;
-	private JMenuItem menuiMultiJoueurQuitterServer;
+	private JMenuItem menuiMultiJoueurQuitterMulti;
 
 	/* Préférences */
 	private JMenu     menuiPreferencesThemes;
@@ -117,7 +117,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuiMultiJoueurRejoindreServer = new JMenuItem("Rejoindre un serveur");
 
 		/* Quitter le serveur */
-		this.menuiMultiJoueurQuitterServer = new JMenuItem("Quitter le serveur");
+		this.menuiMultiJoueurQuitterMulti = new JMenuItem("Quitter le multi-joueur");
 
 		/*-------------*/
 		/* Préférences */
@@ -190,7 +190,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuMultiJoueur.add(this.menuiMultiJoueurRejoindreServer);
 
 		/* Quitter le serveur */
-		this.menuMultiJoueur.add(this.menuiMultiJoueurQuitterServer);
+		this.menuMultiJoueur.add(this.menuiMultiJoueurQuitterMulti);
 
 		/* Ajout de tout à la JMenuBar */
 		this.add(menuMultiJoueur);
@@ -259,7 +259,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuiMultiJoueurRejoindreServer.addActionListener(this);
 
 		/* Quitter le serveur */
-		this.menuiMultiJoueurQuitterServer.addActionListener(this);
+		this.menuiMultiJoueurQuitterMulti.addActionListener(this);
 
 		/*-------------*/
 		/* Préférences */
@@ -384,9 +384,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			}
 
 			/* Quitter le serveur */
-			if (e.getSource() == this.menuiMultiJoueurQuitterServer)
+			if (e.getSource() == this.menuiMultiJoueurQuitterMulti)
 			{
-				this.ctrl.leaveServer();
+				this.ctrl.disconnectMulti();
 			}
 
 			/*-------------*/
@@ -553,8 +553,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuiMultiJoueurRejoindreServer.setForeground(foreGeneralColor);
 
 		/* Quitter une partie */
-		this.menuiMultiJoueurQuitterServer.setBackground(backGeneralColor);
-		this.menuiMultiJoueurQuitterServer.setForeground(foreGeneralColor);
+		this.menuiMultiJoueurQuitterMulti.setBackground(backGeneralColor);
+		this.menuiMultiJoueurQuitterMulti.setForeground(foreGeneralColor);
 
 
 		/*------------*/

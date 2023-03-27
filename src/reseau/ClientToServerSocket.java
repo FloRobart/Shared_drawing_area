@@ -24,7 +24,7 @@ public class ClientToServerSocket extends Thread
         this.ctrl = ctrl;
     }
 
-    public Boolean Connect(String ip, int port)
+    public Boolean connect(String ip, int port)
     {
         try
         {
@@ -56,7 +56,7 @@ public class ClientToServerSocket extends Thread
     }
 
 
-    public void Disconnect()
+    public void disconnect()
     {
         this.running = false;
         try {
@@ -173,7 +173,7 @@ public class ClientToServerSocket extends Thread
                 String command = (String)ois.readObject();
                 if (command.equals("disconnect"))
                 {
-                    this.Disconnect();
+                    this.disconnect();
                 }
 
                 if (command.equals("usernameAccepted"))
@@ -184,7 +184,7 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("usernameRefused"))
                 {
                     JOptionPane.showMessageDialog(null, "Nom d'utilisateur déjà utilisé");
-                    this.Disconnect();
+                    this.disconnect();
                 }
                 
                 if (command.equals("drawings"))
@@ -247,7 +247,6 @@ public class ClientToServerSocket extends Thread
             catch (Exception e)
             {
                 System.err.println("Impossible de lire l'objet envoyé par le client");
-                e.printStackTrace();
                 break;
             }
 
