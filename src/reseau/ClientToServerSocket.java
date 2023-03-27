@@ -176,7 +176,23 @@ public class ClientToServerSocket extends Thread
                 if (command.equals("newDrawing"))
                 {
                     Forme forme = (Forme)ois.readObject();
-                    this.ctrl.getLstFormes().add(forme);
+                    Boolean found = false;
+                    for (Forme f : this.ctrl.getLstFormes())
+                    {
+                        if (f.getId().equals(forme.getId()))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        this.ctrl.getLstFormes().add(forme);
+                    }
+                    else
+                    {
+                        System.err.println("Forme déjà présente");
+                    }
                     this.ctrl.majIhm();
                 }
 
