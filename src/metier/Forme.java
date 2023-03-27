@@ -129,7 +129,7 @@ public class Forme implements java.io.Serializable
 
             double y = m*posx+b;
 
-            return posy >= y-(stroke/2)  && posy <= y+(stroke/2) && (posx >= xDeb-1 && posx <= xFin+1 || posx >= xFin+1 && posx <= xDeb+1);
+            return posy >= y-(stroke/2) && posy <= y+(stroke/2) && (posx >= xDeb-1 && posx <= xFin+1 || posx >= xFin+1 && posx <= xDeb+1);
         }
         else if (type == TYPE_TEXT) /* Texte */
         {
