@@ -375,11 +375,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiMultiJoueurRejoindreServer)
 			{
                 String ip = JOptionPane.showInputDialog("Entrez l'adresse IP du serveur :");
-				Boolean success = this.ctrl.joinServer(ip);
+				String username = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur :");
+				Boolean success = this.ctrl.joinServer(ip, username);
 
-                if (success)
-					JOptionPane.showMessageDialog(null, "Connexion au serveur réussie.", "Information", JOptionPane.INFORMATION_MESSAGE);
-				else
+                if (!success)
                     JOptionPane.showMessageDialog(null, "Impossible de se connecter au serveur.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 
 			}

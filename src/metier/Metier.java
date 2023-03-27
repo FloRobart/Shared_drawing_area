@@ -38,6 +38,8 @@ public class Metier
 	private boolean     peindre;
 	private int         stroke;
 
+	private List<String> lstNomJoueurs;
+
 
     /* Thèmes */
 	private int                     nbThemePerso;
@@ -68,6 +70,9 @@ public class Metier
 		this.rempli        = false;
 		this.peindre       = false;
 		this.stroke        = 5;
+
+		/* Multi-Joueur */
+		this.lstNomJoueurs = new ArrayList<String>();
     }
 
 	/*====================*/
@@ -591,5 +596,29 @@ public class Metier
 		catch (Exception e) { e.printStackTrace(); System.out.println("Erreur lors de la lecture du fichier XML pour récupérer les clée de la HashMap des thème."); }
 
 		return lstCles.toArray(new String[lstCles.size()]);
+	}
+
+	public List<String> getListNomJoueurs()
+	{
+		return this.lstNomJoueurs;
+	}
+
+	public void ajouterNomJoueur(String nomJoueur)
+	{
+		this.lstNomJoueurs.add(nomJoueur);
+	}
+
+	public void supprimerNomJoueur(String nomJoueur)
+	{
+		this.lstNomJoueurs.remove(nomJoueur);
+	}
+
+	public Boolean verifNomJoueur(String nomJoueur)
+	{
+		System.out.println("Verification: " + nomJoueur);
+		for (String s : this.lstNomJoueurs)
+			if (s.equals(nomJoueur)) return false;
+
+		return true;
 	}
 }

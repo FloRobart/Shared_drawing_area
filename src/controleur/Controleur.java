@@ -238,11 +238,11 @@ public class Controleur
      * Permet de joindre un serveur
      * @return true si la connexion a réussi, false sinon
      */
-    public Boolean joinServer(String ip)
+    public Boolean joinServer(String ip, String pseudo)
     {
         this.client = new Client(this);
         
-        return this.client.Connect(ip, 31337);
+        return this.client.Connect(ip, 31337, pseudo);
     }
 
     /**
@@ -448,6 +448,15 @@ public class Controleur
     public String[] getEnsClesThemes() { return this.metier.getEnsClesThemes(); }
 
 
+    public Boolean registerName(String name)
+    {
+        if (this.metier.verifNomJoueur(name))
+        {
+            this.metier.ajouterNomJoueur(name);
+            return true;
+        }
+        return false;
+    }
 
 
     public static void main(String[] args)
