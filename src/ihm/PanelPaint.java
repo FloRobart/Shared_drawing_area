@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import controleur.Controleur;
 import ihm.popUp.PopUpForme;
 import metier.Forme;
+import metier.Metier;
 
 
 public class PanelPaint extends JPanel implements MouseListener, MouseMotionListener
@@ -158,6 +159,7 @@ public class PanelPaint extends JPanel implements MouseListener, MouseMotionList
     public void mouseDragged(MouseEvent me)
     {
         if ((this.ctrl.getPeindre() && this.buttonDragged != MouseEvent.BUTTON3) || this.currentShape == null) return;
+        if (me.getX() < 0 || me.getY() < 0 || me.getX() > Metier.TAILLE_PLATEAU[0] || me.getY() > Metier.TAILLE_PLATEAU[1]) return;
 
         this.drag = true;
         if (this.buttonDragged == MouseEvent.BUTTON1)

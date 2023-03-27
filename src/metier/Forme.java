@@ -2,7 +2,6 @@ package metier;
 
 import static java.lang.Math.min;
 import static java.lang.Math.max;
-import static metier.Metier.TAILLE_PLATEAU;
 import java.awt.Color;
 import java.util.UUID;
 
@@ -148,8 +147,8 @@ public class Forme implements java.io.Serializable
 
     public void setXDeb   (int   xDeb    ) { this.xDeb = xDeb; }
     public void setYDeb   (int   yDeb    ) { this.yDeb = yDeb; }
-    public void setXFin   (int   xFin    ) { this.xFin = min(max(xFin, 0), TAILLE_PLATEAU[0]); }
-    public void setYFin   (int   yFin    ) { this.yFin = min(max(yFin, 0), TAILLE_PLATEAU[1]); }
+    public void setXFin   (int   xFin    ) { this.xFin = xFin; }
+    public void setYFin   (int   yFin    ) { this.yFin = yFin; }
     public void setStroke (int   stroke  ) { this.stroke = stroke; }
     public void setType   (int   type    ) { this.type = type; }
     public void setRempli (boolean rempli) { this.rempli = rempli; }
