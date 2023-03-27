@@ -2,7 +2,6 @@ package metier;
 
 import static java.lang.Math.min;
 import static java.lang.Math.max;
-import static metier.Metier.TAILLE_PLATEAU;
 import java.awt.Color;
 import java.util.UUID;
 
