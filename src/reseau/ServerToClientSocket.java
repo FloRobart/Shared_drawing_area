@@ -116,6 +116,25 @@ public class ServerToClientSocket extends Thread
                     break;
                 }
 
+                if (command.equals("setUsername"))
+                {
+                    String username = (String)ois.readObject();
+                    if (this.serverThread.getCtrl().registerName(username))
+                    {
+                        this.serverThread.getCtrl().majIhm();
+                        oos.writeObject("usernameAccepted");
+                        oos.flush();
+                        System.out.println("Client username accepted (" + username + ")");
+                    }
+                    else
+                    {
+                        oos.writeObject("usernameRefused");
+                        oos.flush();
+                        this.Disconnect();
+                        System.out.println("Client username refused (" + username + ")");
+                    }
+                }
+
                 
 
                 if (command.equals("requestDrawing"))

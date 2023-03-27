@@ -38,7 +38,7 @@ public class Client
         this.clientToServerSocket.sendClear();
     }
 
-    public Boolean Connect(String ip, int port)
+    public Boolean Connect(String ip, int port, String pseudo)
     {
 
         if (this.clientToServerSocket.isAlive())
@@ -52,6 +52,7 @@ public class Client
         if (success)
         {
             this.clientToServerSocket.start();
+            this.clientToServerSocket.sendUsername(pseudo);
             this.clientToServerSocket.requestDrawing();
 
         }

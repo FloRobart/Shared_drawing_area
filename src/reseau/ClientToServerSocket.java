@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controleur.Controleur;
 import metier.Forme;
 @SuppressWarnings("unchecked") 
@@ -80,6 +82,19 @@ public class ClientToServerSocket extends Thread
             e.printStackTrace();
         }
 
+    }
+
+    public void sendUsername(String username)
+    {
+        try {
+            oos.reset();
+            oos.writeObject("setUsername");
+            oos.writeObject(username);
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendForme(Forme forme)
@@ -158,6 +173,17 @@ public class ClientToServerSocket extends Thread
                 String command = (String)ois.readObject();
                 if (command.equals("disconnect"))
                 {
+                    this.Disconnect();
+                }
+
+                if (command.equals("usernameAccepted"))
+                {
+                    JOptionPane.showMessageDialog(null, "Connexion établie");
+                }
+
+                if (command.equals("usernameRefused"))
+                {
+                    JOptionPane.showMessageDialog(null, "Nom d'utilisateur déjà utilisé");
                     this.Disconnect();
                 }
                 
