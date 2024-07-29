@@ -1,3 +1,3 @@
-# Shared_drawing_area
+# Zone de dessins partager
 
-[Sujet](https://diw.iut.univ-lehavre.fr/pedago/info2/R4_01_Archi_Logicielle/Projets/projet-dessin-partage.pdf)
+Ce projet scolaire réalisé en équipe de 3 est une zone de dessins comme paint mais en moins complet et qui permet d'être partagé sur un réseau local pour dessinner à plusieur dessus, un peux comme google doc.
